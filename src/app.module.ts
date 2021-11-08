@@ -1,8 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
 import { SocketModule } from "./domain/socket/socket.module";
 import { Block, BlockSchema } from "./entities/block.schema";
 import { Game, GameSchema } from "./entities/game.schema";
@@ -28,8 +26,6 @@ import { User, UserSchema } from "./entities/user.schema";
 			envFilePath: [".env"]
 		}),
 		SocketModule
-	],
-	controllers: [AppController],
-	providers: [AppService]
+	]
 })
 export class AppModule {}
