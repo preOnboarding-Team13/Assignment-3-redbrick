@@ -20,7 +20,7 @@ export class User {
 	agreement: boolean;
 
 	@Prop({
-		type: [mongoose.Schema.Types.ObjectId],
+		type: Array,
 		ref: Project.name,
 		required: true
 	})

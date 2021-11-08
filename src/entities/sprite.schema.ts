@@ -16,7 +16,7 @@ export class Sprite {
 	spriteCode: string;
 
 	@Prop({
-		type: [mongoose.Schema.Types.ObjectId],
+		type: Array,
 		ref: Block.name,
 		required: true
 	})

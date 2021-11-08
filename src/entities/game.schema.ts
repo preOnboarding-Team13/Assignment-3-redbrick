@@ -6,15 +6,6 @@ export type GameDocument = Game & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Game {
-	@Prop({
-		type: String,
-		required: true,
-		default: function genUUID() {
-			return uuidv4();
-		}
-	})
-	gameId: string;
-
 	@Prop({ type: Boolean, required: true, default: false })
 	projectType: boolean;
 

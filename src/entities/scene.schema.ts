@@ -13,7 +13,7 @@ export class Scene {
 	sceneName: string;
 
 	@Prop({
-		type: [mongoose.Schema.Types.ObjectId],
+		type: Array,
 		ref: Sprite.name,
 		required: true
 	})

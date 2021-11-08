@@ -20,7 +20,7 @@ export class Project {
 	projectName: string;
 
 	@Prop({
-		type: [mongoose.Schema.Types.ObjectId],
+		type: Array,
 		ref: Scene.name,
 		required: true
 	})
