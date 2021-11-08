@@ -11,11 +11,11 @@ export class ErrorCode {
 		public readonly message: string
 	) {}
 
-	getStatusCode(): number {
+	get StatusCode(): number {
 		return this.statusCode;
 	}
 
-	getMessage(): string {
+	get Message(): string {
 		return this.message;
 	}
 }
