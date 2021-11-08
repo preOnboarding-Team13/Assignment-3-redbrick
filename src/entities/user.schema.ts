@@ -4,7 +4,8 @@ import { Project } from "./project.schema";
 
 export type UserDocument = User & mongoose.Document;
 
-@Schema()
+
+@Schema({ versionKey: false })
 export class User {
 	@Prop({ type: String, required: true, unique: true })
 	userId: string;

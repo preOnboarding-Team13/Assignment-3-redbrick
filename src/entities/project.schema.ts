@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export type ProjectDocument = Project & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Project {
 	@Prop({
 		type: String,

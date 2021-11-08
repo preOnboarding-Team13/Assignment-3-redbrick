@@ -3,7 +3,7 @@ import * as mongoose from "mongoose";
 
 export type BlockDocument = Block & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Block {
 	@Prop({ type: Number, required: true })
 	blockId: number;

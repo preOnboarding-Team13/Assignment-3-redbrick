@@ -4,7 +4,7 @@ import { Sprite } from "./sprite.schema";
 
 export type SceneDocument = Scene & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Scene {
 	@Prop({ type: Number, required: true })
 	sceneId: number;

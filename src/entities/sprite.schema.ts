@@ -4,7 +4,7 @@ import { Block } from "./block.schema";
 
 export type SpriteDocument = Sprite & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Sprite {
 	@Prop({ type: Number, required: true })
 	spriteId: number;

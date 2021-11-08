@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export type GameDocument = Game & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Game {
 	@Prop({
 		type: String,
