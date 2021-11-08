@@ -1,9 +1,9 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 
-export type BlockSchema = Block & mongoose.Document;
+export type BlockDocument = Block & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Block {
 	@Prop({ type: Number, required: true })
 	blockId: number;
@@ -20,3 +20,5 @@ export class Block {
 	@Prop({ type: Date, required: true, default: Date.now() })
 	updateDt: Date;
 }
+
+export const BlockSchema = SchemaFactory.createForClass(Block);

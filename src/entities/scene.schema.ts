@@ -1,10 +1,10 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Sprite } from "./sprite.schema";
 
-export type SceneSchema = Scene & mongoose.Document;
+export type SceneDocument = Scene & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Scene {
 	@Prop({ type: Number, required: true })
 	sceneId: number;
@@ -21,3 +21,5 @@ export class Scene {
 	@Prop({ type: Date, required: true, default: Date.now() })
 	updateDt: Date;
 }
+
+export const SceneSchema = SchemaFactory.createForClass(Scene);

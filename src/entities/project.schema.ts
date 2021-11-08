@@ -1,11 +1,11 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Game } from "./game.schema";
 import { Scene } from "./scene.schema";
 
-export type ProjectSchema = Project & mongoose.Document;
+export type ProjectDocument = Project & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Project {
 	@Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
 	projectId: Project;
@@ -31,3 +31,5 @@ export class Project {
 	@Prop({ type: Date, required: true, default: Date.now() })
 	updateDt: Date;
 }
+
+export const ProjectSchema = SchemaFactory.createForClass(Project);

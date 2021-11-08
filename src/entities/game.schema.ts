@@ -1,9 +1,9 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 
-export type GameSchema = Game & mongoose.Document;
+export type GameDocument = Game & mongoose.Document;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Game {
 	@Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
 	gameId: Game;
@@ -23,3 +23,5 @@ export class Game {
 	@Prop({ type: Date, required: true, default: Date.now() })
 	updateDt: Date;
 }
+
+export const GameSchema = SchemaFactory.createForClass(Game);
