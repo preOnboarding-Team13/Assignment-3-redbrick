@@ -10,13 +10,17 @@ import { Project, ProjectDocument } from "src/entities/project.schema";
 
 @WebSocketGateway({ namespace: "project" })
 export class SocketGateway {
-
-	constructor(@InjectModel(Project.name) private project: Model<ProjectDocument>){}
+	constructor(
+		@InjectModel(Project.name) private project: Model<ProjectDocument>
+	) {}
 
 	@SubscribeMessage("update")
 	handleMessage(@MessageBody() data) {
-		const createdProject = new this.project(data);
-		return createdProject.save();
+		return this.project
+			.findOneAndUpdate({ projectId: data.projectId }, data, {
+				returnOriginal: false
+			})
+			.exec();
 	}
 
 	handleDisconnect(client: Socket) {
