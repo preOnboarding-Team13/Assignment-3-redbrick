@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
-import { Project } from "./project.schema";
+import { Project, ProjectSchema } from "./project.schema";
 
 export type UserDocument = User & mongoose.Document;
 
@@ -20,11 +20,11 @@ export class User {
 	agreement: boolean;
 
 	@Prop({
-		type: Array,
-		ref: Project.name,
-		required: true
+		type: [ProjectSchema],
+		required: true,
+		default: []
 	})
-	project: Project[];
+	project: Array<Project>;
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
-import { Scene } from "./scene.schema";
+import { Scene, SceneSchema } from "./scene.schema";
 import { v4 as uuidv4 } from "uuid";
 
 export type ProjectDocument = Project & mongoose.Document;
@@ -20,11 +20,11 @@ export class Project {
 	projectName: string;
 
 	@Prop({
-		type: Array,
-		ref: Scene.name,
-		required: true
+		type: [SceneSchema],
+		required: true,
+		default: []
 	})
-	scenes: Scene[];
+	scenes: Array<Scene>;
 
 	@Prop({ type: Boolean, required: true, default: false })
 	isPublished: boolean;

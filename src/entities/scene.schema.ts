@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
-import { Sprite } from "./sprite.schema";
+import { Sprite, SpriteSchema } from "./sprite.schema";
 
 export type SceneDocument = Scene & mongoose.Document;
 
@@ -13,11 +13,12 @@ export class Scene {
 	sceneName: string;
 
 	@Prop({
-		type: Array,
-		ref: Sprite.name,
-		required: true
+		type: [SpriteSchema],
+		required: true,
+		default: []
 	})
-	sprites: Sprite[];
+	sprites: Array<Sprite>;
+	
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;
