@@ -11,7 +11,7 @@ export class Block {
 	@Prop({ type: String, required: true })
 	blockCode: string;
 
-	@Prop({ type: Number || String })
+	@Prop()
 	value: number | string;
 
 	@Prop({ type: Date, required: true, default: Date.now() })
