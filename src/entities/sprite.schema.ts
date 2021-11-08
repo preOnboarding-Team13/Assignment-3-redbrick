@@ -1,8 +1,8 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Block } from "./block.schema";
 
-export type SpriteSchema = Sprite & mongoose.Document;
+export type SpriteDocument = Sprite & mongoose.Document;
 
 @Schema()
 export class Sprite {
@@ -15,8 +15,12 @@ export class Sprite {
 	@Prop({ type: String, required: true })
 	spriteCode: string;
 
-	@Prop({ type: [Block], required: true })
-	blocks: [Block];
+	@Prop({
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: Block.name,
+		required: true
+	})
+	blocks: Block[];
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;
@@ -24,3 +28,5 @@ export class Sprite {
 	@Prop({ type: Date, required: true, default: Date.now() })
 	updateDt: Date;
 }
+
+export const SpriteSchema = SchemaFactory.createForClass(Sprite);

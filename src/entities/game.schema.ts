@@ -1,12 +1,19 @@
-import { Prop, Schema } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
-export type GameSchema = Game & mongoose.Document;
+export type GameDocument = Game & mongoose.Document;
 
 @Schema()
 export class Game {
-	@Prop({ type: mongoose.Schema.Types.ObjectId, required: true })
-	gameId: Game;
+	@Prop({
+		type: String,
+		required: true,
+		default: function genUUID() {
+			return uuidv4();
+		}
+	})
+	gameId: string;
 
 	@Prop({ type: Boolean, required: true, default: false })
 	projectType: boolean;
@@ -23,3 +30,5 @@ export class Game {
 	@Prop({ type: Date, required: true, default: Date.now() })
 	updateDt: Date;
 }
+
+export const GameSchema = SchemaFactory.createForClass(Game);
