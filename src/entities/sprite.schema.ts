@@ -15,8 +15,12 @@ export class Sprite {
 	@Prop({ type: String, required: true })
 	spriteCode: string;
 
-	@Prop({ type: [Block], required: true })
-	blocks: [Block];
+	@Prop({
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: Block.name,
+		required: true
+	})
+	blocks: Block[];
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;

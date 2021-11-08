@@ -12,8 +12,12 @@ export class Scene {
 	@Prop({ type: String, required: true })
 	sceneName: string;
 
-	@Prop({ type: [Sprite], required: true })
-	sprites: [Sprite];
+	@Prop({
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: Sprite.name,
+		required: true
+	})
+	sprites: Sprite[];
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;
