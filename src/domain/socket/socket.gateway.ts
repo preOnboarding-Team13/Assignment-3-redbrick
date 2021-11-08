@@ -6,18 +6,17 @@ import {
 } from "@nestjs/websockets";
 import { Model } from "mongoose";
 import { Socket } from "socket.io";
-import { Block, BlockDocument } from "src/entities/block.schema";
+import { Project, ProjectDocument } from "src/entities/project.schema";
 
-@WebSocketGateway({ namespace: "makeProject" })
+@WebSocketGateway({ namespace: "project" })
 export class SocketGateway {
 
-	constructor(@InjectModel(Block.name) private block: Model<BlockDocument>){}
+	constructor(@InjectModel(Project.name) private project: Model<ProjectDocument>){}
 
-	@SubscribeMessage("team13")
+	@SubscribeMessage("update")
 	handleMessage(@MessageBody() data) {
-		const createdCat = new this.block(data);
-		// this.catModel.find().exec();
-		return createdCat.save();
+		const createdProject = new this.project(data);
+		return createdProject.save();
 	}
 
 	handleDisconnect(client: Socket) {
