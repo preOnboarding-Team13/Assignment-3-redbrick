@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
+import { ProjectModule } from "./domain/project/project.module";
 import { SocketModule } from "./domain/socket/socket.module";
 import { Block, BlockSchema } from "./entities/block.schema";
 import { Game, GameSchema } from "./entities/game.schema";
@@ -25,7 +26,8 @@ import { User, UserSchema } from "./entities/user.schema";
 		ConfigModule.forRoot({
 			envFilePath: [".env"]
 		}),
-		SocketModule
+		SocketModule,
+		ProjectModule
 	]
 })
 export class AppModule {}
