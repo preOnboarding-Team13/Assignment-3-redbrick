@@ -19,13 +19,13 @@
 | [장희진](https://github.com/heejin99)    |           |
 | [조재복](https://github.com/ildang100)   |           |
 
-
+<br>
 
 ## 🌎 배포
 
-주소 :
+주소 : http://3.144.245.28:3000
 
-
+<br>
 
 ## 🛠 프로젝트 빌드 및 서버 실행 방법
 
@@ -211,7 +211,6 @@ test 폴더: e2e test 폴더
 
 
 
-
 ## 🧬 DB 모델링
 
 ![Untitled Diagram drawio (2)](https://user-images.githubusercontent.com/43634786/140792086-063c5ac0-49cc-4adf-a963-1d8015bee08e.png)
@@ -220,9 +219,64 @@ test 폴더: e2e test 폴더
 
 ## 🔗 구현 기능
 
+<br/>
+
 ### 1) Check List
 
 
+회원가입
+
+✅ 회원을 생성하는 API
+
+✅ 로그인 API
+
+프로젝트
+
+✅ 프로젝트 생성 API
+
+✅ 선택한 프로젝트를 가져오는 API
+
+✅ 프로젝트 편집 API
+
+✅ 프로젝트 조회 API
+
+✅ 프로젝트 삭제 API
+
+게임
+
+✅ 해당 프로젝트를 퍼블리싱 하는 API
+
+✅ 퍼블리싱된 게임을 검색하는 API
+
+좋아요 / 싫어요
+
+✅ 좋아요 API
+
+✅ 싫어요 API
+
+✅ 선택한 게임 데이터를 가져오고, 조회수를 증가시키는 API
+
+
+기업이 제시한 문제
+
+✅ 회원가입 ~ 게임 출시까지 필요한 테이블 설계
+
+✅ 게임 제작하기에 필요한 API
+
+✅ 조회수 수정, 좋아요 API
+
+✅ 게임 혹은 사용자로 검색 API
+
+✅ 프로젝트 실시간 반영을 위한 Architecture 설계
+
+✅ 설계한 Architecture를 토대로 기능 구현
+
+✅ E2E Test
+
+✅ Unit Test 
+
+<br/>
+<br/>
 
 ### 2) 상세 내용
 
@@ -230,14 +284,77 @@ test 폴더: e2e test 폴더
 
 
 
+<br/>
+<br/>
+
 #### mongoose 라이브러리 사용
 
+TypeOrm도 MongoDB를 지원해주지만, TypeOrm은 MongoDB 3.7버전까지 밖에 지원을 해주지 않으며 TypeOrm의 QueryBuilder도 지원되지 않습니다. 따라서 Nest Js에서 MongoDB와 잘맞는 mongoose ODM을 사용하여 프로젝트를 진행하였습니다.
 
 
-#### 실시간 처리를 위한 socket 통신 이용
+<br/>
+<br/>
 
-// 아키텍쳐 그리기?
 
+#### 실시간 처리를 위한 socket 통신 이용  
+
+해당 기업에서 실시간 처리를 어떻게 하는지 궁금해서 구글 크롬의 개발자 기능을 사용하여 WizLab 서비스의 Network 통신을 보기로 했습니다. 해당 서비스에서는 사용자가 실시간으로 자신의 게임을 편집할 때마다 소켓 통신을 사용하여 백엔드 서버로 데이터를 전송하고 있었습니다. 따라서 프로젝트를 실시간으로 반영하기 위해 소켓 통신을 사용하여 데이터베이스에 저장하기로 하였습니다. 
+
+<br/>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/52685665/140965390-6260cab4-8f34-4b95-8d16-85060505b9c2.png"></p>
+
+<br/>
+<br/>
+
+저희는 project라는 url을 설정하고 해당 소켓에 연결하도록 구현하였고, update 요청을 할 때마다 project 전체 데이터를 전송하여 한번에 업데이트 하는 방식을 선택하였습니다. 아무래도 사용자가 실시간으로 블럭, 씬, 프로젝트를 수정할 수 있기 때문에 분리해서 구현하는 것 보다 한번에 데이터를 업데이트 시키는 것이 좋다고 판단하였습니다.  
+
+<br/>
+
+```javascript
+@WebSocketGateway({ namespace: "project" })
+export class SocketGateway {
+	constructor(
+		@InjectModel(Project.name) private project: Model<ProjectDocument>
+	) {}
+
+	@SubscribeMessage("update")
+	handleMessage(@MessageBody() data) {
+		return this.project
+			.findOneAndUpdate({ projectId: data.projectId }, data, {
+				returnOriginal: false
+			})
+			.exec();
+	}
+
+	handleDisconnect(client: Socket) {
+		console.log(`Client disconnected: ${client.id}`);
+	}
+
+	handleConnection(client: Socket) {
+		console.log(`Client Connected: ${client.id}`);
+	}
+}
+```
+
+<br/>
+<br/>
+
+Postman으로는 다음과 같이 소켓 통신 테스트를 진행할 수 있었습니다.  
+
+<br/>
+
+<p align="center"><img src="https://user-images.githubusercontent.com/52685665/140968082-e8db02d9-52f5-4a4f-aeba-641251b06a2d.png"></p>
+
+<br/>
+<br/>
+
+
+#### 😎 Architecture
+
+
+
+<p align="center"><img src="https://user-images.githubusercontent.com/52685665/140969833-e8c664a3-5166-48fe-bbee-c5d53fbf938d.png"></p>
 
 
 ## 🐾 API 

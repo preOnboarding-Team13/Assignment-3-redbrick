@@ -8,6 +8,7 @@ import { GameService } from "./game.service";
 const mockGameRepository = {
 	create: jest.fn(),
 	update: jest.fn(),
+	findAll: jest.fn(),
 	findByUserId: jest.fn(),
 	findByGameName: jest.fn(),
 	findByUserIdAndGameName: jest.fn()
@@ -209,23 +210,29 @@ describe("GameService", () => {
 		});
 	});
 	describe("검색 테스트", () => {
+
+		it("검색 조건 없음", () => {
+			const query = {};
+			service.search(query);
+			expect(mockGameRepository.findAll).toHaveBeenCalled();
+		});
 		it("유저 아이디로 검색", () => {
-			const query = { userId: "test" }
+			const query = { userId: "test" };
 			service.search(query);
 			expect(mockGameRepository.findByUserId).toHaveBeenCalled();
 		});
 
 		it("게임 이름으로 검색", () => {
-			const query = { gameName: "재밌는 게임" }
+			const query = { gameName: "재밌는 게임" };
 			service.search(query);
 			expect(mockGameRepository.findByGameName).toHaveBeenCalled();
 		});
-		
+
 		it("유저 아이디와 게임 이름으로 검색", () => {
 			const query = {
 				userId: "test",
 				gameName: "재밌는 게임"
-			}
+			};
 			service.search(query);
 			expect(mockGameRepository.findByUserIdAndGameName).toHaveBeenCalled();
 		});

@@ -22,6 +22,10 @@ export class GameRepository {
         );
     }
 
+    async findAll(): Promise<Game[]> {
+        return this.gameModel.find();
+    }
+
     async findByUserId(userId): Promise<Game[]> {
         const result = await this.gameModel.find({
             "project.userId": userId,
