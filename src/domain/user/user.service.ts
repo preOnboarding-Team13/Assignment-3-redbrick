@@ -47,6 +47,9 @@ export class UserService {
 	}
 
 	async getProject(loginUser: LoginUser) {
+		if (!loginUser?.userId) {
+			throw new UnauthorizedException();
+		}
 		return await this.projectRepository.find({
 			userId: loginUser.userId
 		});

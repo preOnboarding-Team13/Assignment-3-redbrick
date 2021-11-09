@@ -5,34 +5,36 @@ import { Project } from "src/entities/project.schema";
 
 @Injectable()
 export class ProjectRepository {
-    constructor(@InjectModel("Project") private readonly projectModel: Model<Project>){}
+	constructor(
+		@InjectModel("Project") private readonly projectModel: Model<Project>
+	) {}
 
-    create(data): Promise<Project> {
-        const project: Project = new Project();
-        for (const [key, value] of Object.entries(data)) {
-            project[key] = value;
-        }
+	create(data): Promise<Project> {
+		const project: Project = new Project();
+		for (const [key, value] of Object.entries(data)) {
+			project[key] = value;
+		}
 
-        return new this.projectModel(project).save();
-    }
+		return new this.projectModel(project).save();
+	}
 
-    async findById(_id: string): Promise<Project> {
-        return await this.projectModel.findById({ _id });
-    }
+	async findById(_id: string): Promise<Project> {
+		return await this.projectModel.findById({ _id });
+	}
 
-    async find(data, properties = "projectName updateDt"): Promise<Project[]> {
-        return await this.projectModel.find({ data }).select(properties).exec();
-    }
+	async find(data, properties = "projectName updateDt"): Promise<Project[]> {
+		return await this.projectModel.find(data).select(properties).exec();
+	}
 
-    updateOne(project, newData): Promise<Project> {
-        for (const [key, value] of Object.entries(newData)) {
-            project[key] = value;
-        }
+	updateOne(project, newData): Promise<Project> {
+		for (const [key, value] of Object.entries(newData)) {
+			project[key] = value;
+		}
 
-        return project.save();
-    }
+		return project.save();
+	}
 
-    delete(project) {
-        return project.delete();
-    }
+	delete(project) {
+		return project.delete();
+	}
 }
