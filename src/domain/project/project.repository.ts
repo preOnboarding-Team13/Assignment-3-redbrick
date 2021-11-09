@@ -20,6 +20,10 @@ export class ProjectRepository {
         return await this.projectModel.findById({ _id });
     }
 
+    async find(data, properties = "projectName updateDt"): Promise<Project[]> {
+        return await this.projectModel.find({ data }).select(properties).exec();
+    }
+
     updateOne(project, newData): Promise<Project> {
         for (const [key, value] of Object.entries(newData)) {
             project[key] = value;

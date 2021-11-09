@@ -7,6 +7,8 @@ import { AuthService } from "../auth/auth.service";
 import { Project } from "src/entities/project.schema";
 import { User } from "src/entities/user.schema";
 import { DuplicatedUserException } from "./exception/DuplicatedUserException";
+import { UserRepository } from "./user.repository";
+import { ProjectRepository } from "../project/project.repository";
 
 @Injectable()
 export class UserService {
@@ -17,7 +19,9 @@ export class UserService {
 		@InjectModel("Project")
 		private projectModel: Model<Project>,
 
-		private authService: AuthService
+		private authService: AuthService,
+		private userRepository: UserRepository,
+		private projectRepository: ProjectRepository
 	) {}
 
 	private async hashPassword(password: string): Promise<string> {
@@ -25,27 +29,26 @@ export class UserService {
 	}
 
 	async create(createUser: CreateUserDto) {
-		const findUser = await this.userModel.findOne({
-			userId: createUser.userId
-		});
-		if (findUser) throw new DuplicatedUserException();
+		const { userId, userPw, userBirthday, agreement } = createUser;
+		const findUser = await this.userRepository.findOne(userId);
+
+		if (findUser) {
+			throw new DuplicatedUserException();
+		}
 
 		const user: User = new User();
-		user.userId = createUser.userId;
-		user.userPw = await this.hashPassword(createUser.userPw);
-		user.userBirthday = createUser.userBirthday;
-		user.agreement = createUser.agreement;
-
-		new this.userModel(user).save();
+		user.userId = userId;
+		user.userPw = await this.hashPassword(userPw);
+		user.userBirthday = userBirthday;
+		user.agreement = agreement;
+		await this.userRepository.create(user);
 
 		return this.authService.makeToken(user);
 	}
 
-	async getProject(loginUser) {
-		const projects = await this.projectModel
-			.find({ userId: loginUser.userId })
-			.select("projectName updateDt")
-			.exec();
-		return projects;
+	async getProject(loginUser: LoginUser) {
+		return await this.projectRepository.find({
+			userId: loginUser.userId
+		});
 	}
 }
