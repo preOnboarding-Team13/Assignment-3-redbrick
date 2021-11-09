@@ -7,23 +7,25 @@ import { SearchQuery } from "./dto/searchQuery.dto";
 
 @Injectable()
 export class GameRepository {
-    constructor(
-        @InjectModel("Game") private readonly gameModel: Model<Game>,
-        @InjectModel("Project") private readonly projectModel: Model<Project>
-    ) {}
+    constructor(@InjectModel("Game") private readonly gameModel: Model<Game>) {}
 
     create(data) {
         return new this.gameModel(data).save();
     }
 
-    async findByUserId(userId) {
+    async update(id, data): Promise<Game> {
+        data.updateDt = Date.now();
+        return await this.gameModel.findByIdAndUpdate(id, data);
+    }
+
+    async findByUserId(userId): Promise<Game[]> {
         const result = await this.gameModel.find({
             "project.userId": userId,
         });
         return result
     }
 
-    async findByGameName(gameName) {
+    async findByGameName(gameName): Promise<Game[]> {
         GameSchema.index({
             gameName: "text"
         });
@@ -35,7 +37,7 @@ export class GameRepository {
         return result
     }
 
-    async findByUserIdAndGameName(query: SearchQuery) {
+    async findByUserIdAndGameName(query: SearchQuery): Promise<Game[]> {
         const result = await this.gameModel.find({
             gameName: new RegExp(query.gameName),
             "project.userId": query.userId,

@@ -1,41 +1,43 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
 import { Game } from "src/entities/game.schema";
-import { Project } from "src/entities/project.schema";
 import { NotFoundProjectException } from "../project/exception/NotFoundProjectException";
+import { ProjectRepository } from "../project/project.repository";
 import { SearchQuery } from "./dto/searchQuery.dto";
 import { GameRepository } from "./game.repository";
 
 @Injectable()
 export class GameService {
 	constructor(
-		private gameRepository: GameRepository,
+        private gameRepository: GameRepository,
+        private projectRepository: ProjectRepository
+    ) {}
 
-		@InjectModel("Game")
-		private readonly gameModel: Model<Game>,
+	async publish(loginUser: LoginUser, projectId: string): Promise<Game> {
+		const project = await this.projectRepository.findById(projectId);
 
-		@InjectModel("Project")
-		private readonly projectModel: Model<Project>
-	) {}
+		if (!project) {
+            throw new NotFoundProjectException();
+        }
 
-	async publish(loginUser, projectId) {
-		const project = await this.projectModel.findById(projectId);
-		if (!project) throw new NotFoundProjectException();
-		if (project.userId != loginUser.userId) throw new BadRequestException();
-		if (project.isPublished)
-			return this.gameModel.findByIdAndUpdate(project.gameId, { project });
-		else return this.gameRepository.create(project);
+        if (project.userId != loginUser.userId) {
+            throw new BadRequestException();
+        }
+
+		if (project.isPublished) {
+			return await this.gameRepository.update(project.gameId, { project });
+        } else {
+            return await this.gameRepository.create(project);
+        }
 	}
 
-	search(query: SearchQuery) {
+	async search(query: SearchQuery): Promise<Game[]> {
 		const { userId, gameName } = query;
 		if (userId && gameName) {
-			return this.gameRepository.findByUserIdAndGameName(query);
+			return await this.gameRepository.findByUserIdAndGameName(query);
 		}
 
 		return userId
-			? this.gameRepository.findByUserId(userId)
-			: this.gameRepository.findByGameName(gameName);
+			? await this.gameRepository.findByUserId(userId)
+			: await this.gameRepository.findByGameName(gameName);
 	}
 }
