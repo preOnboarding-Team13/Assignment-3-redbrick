@@ -13,7 +13,6 @@ export class AuthService {
 	) {}
 
 	async validateUser(userId: string, userPw: string): Promise<User> {
-        console.log('service: ',userId, userPw);
 		const user = await this.userModel.findOne({
 			userId: userId
 		});

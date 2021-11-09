@@ -23,11 +23,9 @@ export class UserService {
 		const findUser = await this.userModel.findOne({
 			userId: createUser.userId
 		});
-		console.log(findUser);
 		if (findUser) throw new Error();
 
 		const user: User = new User();
-		console.log(user);
 		user.userId = createUser.userId;
 		user.userPw = await this.hashPassword(createUser.userPw);
 		user.userBirthday = createUser.userBirthday;
