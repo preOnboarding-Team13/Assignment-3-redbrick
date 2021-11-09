@@ -208,23 +208,27 @@ describe("GameService", () => {
 			}
 		});
 	});
-	describe("game service search 테스트", () => {
-		it("game service search 테스트 / gameName (성공)", async () => {
-			// given
-			mockGameRepository.findByUserIdAndGameName.mockResolvedValue("a");
-			mockGameRepository.findByGameName.mockResolvedValue("b");
-			mockGameRepository.findByUserId.mockResolvedValue("c");
-
-			// when
-			const result = service.search({gameName: "testName"});
-			// then
-			expect(result).toEqual("b")
+	describe("검색 테스트", () => {
+		it("유저 아이디로 검색", () => {
+			const query = { userId: "test" }
+			service.search(query);
+			expect(mockGameRepository.findByUserId).toHaveBeenCalled();
 		});
-		it("game service search 테스트 / userId (성공)", async () => {
 
+		it("게임 이름으로 검색", () => {
+			const query = { gameName: "재밌는 게임" }
+			service.search(query);
+			expect(mockGameRepository.findByGameName).toHaveBeenCalled();
 		});
-		it("game service search 테스트 / gameName && userId (성공)", async () => {
-
+		
+		it("유저 아이디와 게임 이름으로 검색", () => {
+			const query = {
+				userId: "test",
+				gameName: "재밌는 게임"
+			}
+			service.search(query);
+			expect(mockGameRepository.findByUserIdAndGameName).toHaveBeenCalled();
 		});
 	})
+
 });
