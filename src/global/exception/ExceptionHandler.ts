@@ -5,6 +5,8 @@ import {
 	NotFoundException,
 	UnauthorizedException
 } from "@nestjs/common";
+import { NotFoundGameException } from "src/domain/like/exception/NotFoundGameException";
+import { NotFoundUserException } from "src/domain/like/exception/NotFoundUserException";
 import { ErrorCode } from "../common/ErrorCode";
 import { ErrorResponse } from "../common/ErrorResponse";
 
@@ -28,6 +30,16 @@ export class ExceptionHandler implements ExceptionFilter {
 			response
 				.status(status)
 				.json(ErrorResponse.response(ErrorCode.NotFound));
+		} else if (exception instanceof NotFoundGameException) {
+			const status = exception.getStatus();
+			response
+				.status(status)
+				.json(ErrorResponse.response(ErrorCode.NotFoundGame));
+		} else if (exception instanceof NotFoundUserException) {
+			const status = exception.getStatus();
+			response
+				.status(status)
+				.json(ErrorResponse.response(ErrorCode.NotFoundUser));
 		} else {
 			// 에러 처리가 완료되면 다른 오류로 교체해주세요.
 			response
