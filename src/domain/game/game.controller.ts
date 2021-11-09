@@ -23,7 +23,7 @@ export class GameController {
 		return this.gameService.publish(loginUser, createGameDto);
 	}
 
-	@Get("/search")
+	@Get()
 	search(@Query() query) {
 		return this.gameService.search(query);
 	}

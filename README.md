@@ -116,6 +116,98 @@ $ npm start
 
 ## 📂 폴더 구조
 
+6개의 domain을 생성했습니다.
+
+- socket
+- project
+- game
+- auth
+- user
+- game
+
+database 폴더: mongoDB 연결 폴더
+
+entities 폴더: mongoose Schema 폴더
+
+test 폴더: e2e test 폴더
+
+```
+.
+├── src
+│  ├── database
+│  │  │  ├── database.module.ts
+│  │  │  └── database.provider.ts
+│  ├── domain
+│  │  ├── auth
+│  │  │  ├── guards
+│  │  │  │  ├── createProject.dto.ts
+│  │  │  │  └── createProject.dto.ts
+│  │  │  ├── auth.controller.spec.ts
+│  │  │  ├── auth.controller.ts
+│  │  │  ├── auth.module.ts
+│  │  │  ├── auth.service.spec.ts
+│  │  │  └── auth.service.ts
+│  │  ├── project
+│  │  │  ├── dto
+│  │  │  │  └── createProject.dto.ts
+│  │  │  ├── exception
+│  │  │  │  └── NotFoundGameException.dto.ts
+│  │  │  ├── project.controller.spec.ts
+│  │  │  ├── project.controller.ts
+│  │  │  ├── project.module.ts
+│  │  │  ├── project.controller.ts
+│  │  │  ├── project.service.spec.ts
+│  │  │  └── project.service.ts
+│  │  ├── game
+│  │  │  └── ...
+│  │  ├── project
+│  │  │  └── ...
+│  │  ├── user
+│  │  │  ├── exception
+│  │  │  │  ├── DuplicatedUserException.dto.ts
+│  │  │  │  ├── NotFoundUserException.dto.ts
+│  │  │  │  └── UnauthorizedUserException.dto.ts
+│  │  │  └── ...
+│  │  ├── like
+│  │  │  ├── like.controller.spec.ts
+│  │  │  ├── like.controller.ts
+│  │  │  ├── like.module.ts
+│  │  │  ├── like.service.spec.ts
+│  │  │  └── like.service.ts
+│  │  ├── socket
+│  │  │  ├── socket.gateway.spec.ts
+│  │  │  ├── socket.gateway.ts
+│  │  │  └── socket.module.ts
+│  ├── entities
+│  │  ├── block.schema.ts
+│  │  ├── game.schema.ts
+│  │  ├── project.schema.ts
+│  │  ├── scene.schema.ts
+│  │  ├── sprite.schema.ts
+│  │  └── user.schema.ts
+│  ├── global
+│  │  ├── common
+│  │  │  ├── CommonResponse.ts
+│  │  │  ├── ErrorCode.ts
+│  │  │  ├── ErrorResponse.ts
+│  │  │  ├── SuccessCode.ts
+│  │  │  └── SuccessResponse.ts
+│  │  ├── exception
+│  │  │  └── ExceptionHandler.ts
+│  ├── app.module.ts
+│  ├── main.ts
+├── test
+│  ├── app.e2e-spec.ts
+│  └── jest-e2e.json
+├── .env
+├── nest-cli.json
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── tsconfig.build.json
+└── README.md
+```
+
 
 
 

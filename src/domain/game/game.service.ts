@@ -40,6 +40,11 @@ export class GameService {
 
 	async search(query: SearchQuery): Promise<Game[]> {
 		const { userId, gameName } = query;
+
+		if(!userId && !gameName) {
+			return await this.gameRepository.findAll();
+		}
+
 		if (userId && gameName) {
 			return await this.gameRepository.findByUserIdAndGameName(query);
 		}
