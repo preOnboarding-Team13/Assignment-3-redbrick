@@ -282,6 +282,8 @@ test 폴더: e2e test 폴더
 
 #### Database로 MongoDB 선택
 
+사용자가 실시간으로 작성하는 게임 프로젝트가 빠르게 저장되려면 관계형 데이터베이스보다 비관계형 데이터베이스를 사용해서 각종 데이터를 저장하자고 생각하였습니다. 비관계형 데이터베이스는 팀원들에게 익숙한 MongoDB를 사용하였습니다.
+
 <br/>
 
 #### mongoose 라이브러리 사용
@@ -347,6 +349,14 @@ Postman으로는 다음과 같이 소켓 통신 테스트를 진행할 수 있�
 ## 😎 Architecture
 
 <p align="center"><img src="https://user-images.githubusercontent.com/52685665/140969833-e8c664a3-5166-48fe-bbee-c5d53fbf938d.png"></p>
+
+<br/>
+
+## 해당 프로젝트에서 간과한 부분
+
+저희처럼 MongoDB 데이터를 다루면 아래의 사진처럼 Maximum Call Stack Error가 발생합니다. 처음 구현할 때는 아무문제 없어 보였으나, 각자 작업한 부분을 합치고 각종 데이터들을 가져오면서 MongoDB에서 문제가 발생하게 되었습니다. 해당 문제를 프로젝트 제출 직전에 발견하여서 수정은 하지 못하였습니다. 하지만 해당 문제는 가져오는 데이터끼리 서로 참조하기 때문에 발생하는 것이었고, 이는 mongoose Entity의 관계 설정 문제이기 때문에 Entity 설정을 수정하고 그에 맞춰 코드를 수정하면 해당 오류는 해결할 수 있을 것 같습니다.
+
+<p align="center"><img src="https://user-images.githubusercontent.com/52685665/140994654-a17bb159-2caf-401a-aad3-355decd165b4.png"></p>
 
 <br/>
 
