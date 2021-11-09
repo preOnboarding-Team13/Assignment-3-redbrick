@@ -1,4 +1,4 @@
 export class SearchQuery {
-    userId: string;
-    gameName: string;
+    userId?: string;
+    gameName?: string;
 }
