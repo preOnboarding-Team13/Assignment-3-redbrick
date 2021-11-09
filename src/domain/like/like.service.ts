@@ -10,9 +10,6 @@ import { NotFoundUserException } from "./exception/NotFoundUserException";
 @Injectable()
 export class LikeService {
 	constructor(
-		@InjectModel("Project")
-		private readonly projectModel: Model<Project>,
-
 		@InjectModel("User")
 		private readonly userModel: Model<User>,
 
@@ -30,7 +27,10 @@ export class LikeService {
 		const view = findGame.view + 1;
 		findGame.view = view;
 
-		return await new this.gameModel(findGame).save();
+		return await this.gameModel.findByIdAndUpdate(
+			{ _id: gameId },
+			findGame
+		);
 	}
 
 	// 좋아요
@@ -56,7 +56,7 @@ export class LikeService {
 		) {
 			!findGame.like ? (findGame.like = new Object()) : findGame.like;
 			findGame.like[findUser.userId] = true;
-			await new this.gameModel(findGame).save();
+			await this.gameModel.updateOne({ _id: gameId }, findGame);
 		}
 
 		return await this.gameModel.findOne({ _id: gameId });
@@ -85,7 +85,7 @@ export class LikeService {
 		) {
 			!findGame.like ? (findGame.like = new Object()) : findGame.like;
 			findGame.like[findUser.userId] = false;
-			await new this.gameModel(findGame).save();
+			await this.gameModel.updateOne({ _id: gameId }, findGame);
 		}
 
 		return await this.gameModel.findOne({ _id: gameId });
