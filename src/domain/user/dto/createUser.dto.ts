@@ -2,15 +2,15 @@ import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateUserDto {
 	@IsString()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	userId!: string;
 
 	@IsString()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	userPw!: string;
 
 	@IsString()
-    @IsNotEmpty()
+	@IsNotEmpty()
 	userBirthday!: string;
 
 	@IsBoolean()

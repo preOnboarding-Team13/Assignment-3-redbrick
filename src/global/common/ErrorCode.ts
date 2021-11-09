@@ -5,6 +5,14 @@ export class ErrorCode {
 		404,
 		"요청받은 리소스를 찾을 수 없습니다."
 	);
+	static readonly NotFoundGame = new ErrorCode(
+		404,
+		"해당 게임을 찾을 수 없습니다."
+	);
+	static readonly NotFoundUser = new ErrorCode(
+		404,
+		"해당 사용자를 찾을 수 없습니다."
+	);
 
 	constructor(
 		private readonly statusCode: number,

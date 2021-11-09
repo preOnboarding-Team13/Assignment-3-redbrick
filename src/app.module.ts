@@ -12,6 +12,7 @@ import { Scene, SceneSchema } from "./entities/scene.schema";
 import { Sprite, SpriteSchema } from "./entities/sprite.schema";
 import { User, UserSchema } from "./entities/user.schema";
 import { GameModule } from "./domain/game/game.module";
+import { LikeModule } from "./domain/like/like.module";
 
 @Module({
 	imports: [
@@ -33,7 +34,8 @@ import { GameModule } from "./domain/game/game.module";
 		AuthModule,
 		SocketModule,
 		ProjectModule,
-		GameModule
+		GameModule,
+		LikeModule
 	]
 })
 export class AppModule {}
