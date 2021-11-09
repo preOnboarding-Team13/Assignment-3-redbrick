@@ -22,7 +22,7 @@ export class ErrorCode {
 		"아이디나 비밀번호를 확인해주세요."
 	);
 	static readonly NewError = new ErrorCode(404, "예상치 못한 에러입니다.");
-	static readonly DuplicatedUser = new ErrorCode(404, "중복된 아이디입니다.");
+	static readonly DuplicatedUser = new ErrorCode(409, "중복된 아이디입니다.");
 	constructor(
 		private readonly statusCode: number,
 		public readonly message: string
