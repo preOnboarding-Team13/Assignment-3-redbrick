@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User } from "src/entities/user.schema";
 import { CreateUserDto } from "./dto/createUser.dto";
 import * as bcrypt from "bcrypt";
 import { AuthService } from "../auth/auth.service";
+import { Project } from "src/entities/project.schema";
+import { User } from "src/entities/user.schema";
 
 @Injectable()
 export class UserService {
@@ -12,6 +13,9 @@ export class UserService {
 		@InjectModel("User")
 		private userModel: Model<User>,
 
+		@InjectModel("Project")
+		private projectModel: Model<Project>,
+		
 		private authService: AuthService
 	) {}
 
@@ -32,7 +36,16 @@ export class UserService {
 		user.agreement = createUser.aggrement;
 
 		new this.userModel(user).save();
-		
+
 		return this.authService.makeToken(user);
+	}
+
+	async getProject(loginUser) {
+		const projects = await this.projectModel
+			.find({ userId: loginUser.userId })
+			.select("projectName updateDt")
+			.exec();
+		console.log(projects);
+		return projects;
 	}
 }
