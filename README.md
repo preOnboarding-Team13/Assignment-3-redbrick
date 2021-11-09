@@ -12,12 +12,12 @@
 
 | 이름                                     | 담당 기능 |
 | ---------------------------------------- | --------- |
-| [김바다](https://github.com/sally0226)   |           |
-| [김효민](https://github.com/luckyhyom)   |           |
-| [원동균](https://github.com/WonDongGyun) |           |
-| [이나영](https://github.com/bokiri409)   |           |
-| [장희진](https://github.com/heejin99)    |           |
-| [조재복](https://github.com/ildang100)   |           |
+| [김바다](https://github.com/sally0226)   |Project API 기능 구현 & Unit Test 구현, E2E Test|
+| [김효민](https://github.com/luckyhyom)   |Socket Unit Test, Refactoring, Game Publishing API 구현|
+| [원동균](https://github.com/WonDongGyun) |Socket 설정 및 구현, like hate 기능 구현 & unit 테스트, 공통 에러 처리 및 응답 구현|
+| [이나영](https://github.com/bokiri409)   |Project API 기능 구현 & Unit Test 구현|
+| [장희진](https://github.com/heejin99)    |User, Auth 기능 구현 & Unit Test 구현, AWS 서버 배포|
+| [조재복](https://github.com/ildang100)   |코드 Refactoring, E2E Test|
 
 <br>
 
@@ -224,56 +224,56 @@ test 폴더: e2e test 폴더
 ### 1) Check List
 
 
-회원가입
+- 회원가입
 
-✅ 회원을 생성하는 API
+	✅ 회원을 생성하는 API
 
-✅ 로그인 API
+	✅ 로그인 API
 
-프로젝트
+- 프로젝트
 
-✅ 프로젝트 생성 API
+	✅ 프로젝트 생성 API
 
-✅ 선택한 프로젝트를 가져오는 API
+	✅ 선택한 프로젝트를 가져오는 API
+	
+	✅ 프로젝트 편집 API
 
-✅ 프로젝트 편집 API
+	✅ 프로젝트 조회 API
 
-✅ 프로젝트 조회 API
+	✅ 프로젝트 삭제 API
 
-✅ 프로젝트 삭제 API
+- 게임
 
-게임
+	✅ 해당 프로젝트를 퍼블리싱 하는 API
 
-✅ 해당 프로젝트를 퍼블리싱 하는 API
+	✅ 퍼블리싱된 게임을 검색하는 API
 
-✅ 퍼블리싱된 게임을 검색하는 API
+- 좋아요 / 싫어요
 
-좋아요 / 싫어요
+	✅ 좋아요 API
 
-✅ 좋아요 API
+	✅ 싫어요 API
 
-✅ 싫어요 API
-
-✅ 선택한 게임 데이터를 가져오고, 조회수를 증가시키는 API
+	✅ 선택한 게임 데이터를 가져오고, 조회수를 증가시키는 API
 
 
-기업이 제시한 문제
+- 기업이 제시한 문제
 
-✅ 회원가입 ~ 게임 출시까지 필요한 테이블 설계
+	✅ 회원가입 ~ 게임 출시까지 필요한 테이블 설계
 
-✅ 게임 제작하기에 필요한 API
+	✅ 게임 제작하기에 필요한 API
 
-✅ 조회수 수정, 좋아요 API
+	✅ 조회수 수정, 좋아요 API
 
-✅ 게임 혹은 사용자로 검색 API
+	✅ 게임 혹은 사용자로 검색 API
 
-✅ 프로젝트 실시간 반영을 위한 Architecture 설계
+	✅ 프로젝트 실시간 반영을 위한 Architecture 설계
 
-✅ 설계한 Architecture를 토대로 기능 구현
+	✅ 설계한 Architecture를 토대로 기능 구현
 
-✅ E2E Test
+	✅ E2E Test
 
-✅ Unit Test 
+	✅ Unit Test 
 
 <br/>
 <br/>
@@ -282,19 +282,13 @@ test 폴더: e2e test 폴더
 
 #### Database로 MongoDB 선택
 
-
-
-<br/>
 <br/>
 
 #### mongoose 라이브러리 사용
 
 TypeOrm도 MongoDB를 지원해주지만, TypeOrm은 MongoDB 3.7버전까지 밖에 지원을 해주지 않으며 TypeOrm의 QueryBuilder도 지원되지 않습니다. 따라서 Nest Js에서 MongoDB와 잘맞는 mongoose ODM을 사용하여 프로젝트를 진행하였습니다.
 
-
 <br/>
-<br/>
-
 
 #### 실시간 처리를 위한 socket 통신 이용  
 
@@ -350,24 +344,42 @@ Postman으로는 다음과 같이 소켓 통신 테스트를 진행할 수 있�
 <br/>
 
 
-#### 😎 Architecture
-
-
+## 😎 Architecture
 
 <p align="center"><img src="https://user-images.githubusercontent.com/52685665/140969833-e8c664a3-5166-48fe-bbee-c5d53fbf938d.png"></p>
 
+<br/>
 
 ## 🐾 API 
 
-[Postman 주소-링크]()
+[Postman 주소-링크](https://documenter.getpostman.com/view/15410333/UVC5F82o)
 
-
+<br/>
 
 ## 🐾 API Test 방법
 
+#### 1. 위의 Postman 주소 링크를 클릭하여 Postman으로 들어갑니다.
+#### 2. 서버 주소가 알맞은지 확인합니다.
+
+![image](https://user-images.githubusercontent.com/41619081/140978000-325a85ce-e0ae-4f26-9e6a-980e382b58f1.png)
+
+#### 3. Signup, Login API를 이용하여 회원가입과 로그인을 진행할 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/41619081/140990609-120571c6-ae78-4569-b921-c85b40bed2dc.png)
+
+#### 4. Project Create, Read, Edit, Delete API를 이용하여 유저는 각각의 게임 프로젝트를 생성, 상세보기, 편집, 삭제가 가능합니다.
+
+![image](https://user-images.githubusercontent.com/41619081/140990936-c8d6428e-01c4-44a6-90c3-fb374188edfa.png)
+![image](https://user-images.githubusercontent.com/41619081/140987859-268e63b8-a99d-4af0-a101-34a3098a017c.png)
+
+#### 5. Game API를 이용하여 해당 게임을 만든 유저는 퍼블리싱 할 수 있고, 퍼블리싱 된 게임 1개를 볼 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/41619081/140991425-8102815d-672c-440e-ab8a-c27e3926a46d.png)
+
+#### 6. Like, Hate API를 이용하여 로그인 한 유저는 퍼블리싱 된 게임에 좋아요와 싫어요를 누를 수 있습니다.
 
 
-
+<br/>
 
 ## 🍭 TIL 블로그 주소
 
