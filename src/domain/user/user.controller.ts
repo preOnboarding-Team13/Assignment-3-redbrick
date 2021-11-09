@@ -23,7 +23,6 @@ export class UserController {
 
 	@Post("signup")
 	async signUp(@Body() body: CreateUserDto): Promise<SuccessResponse> {
-		console.log(body);
 		return SuccessResponse.response(
 			SuccessCode.CreateUser,
 			await this.userService.create(body)

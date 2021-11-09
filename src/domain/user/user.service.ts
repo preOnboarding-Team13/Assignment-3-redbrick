@@ -36,7 +36,7 @@ export class UserService {
 		user.userBirthday = createUser.userBirthday;
 		user.agreement = createUser.agreement;
 
-		new this.userModel(user).save();
+		this.userModel.create(user);
 
 		return this.authService.makeToken(user);
 	}
