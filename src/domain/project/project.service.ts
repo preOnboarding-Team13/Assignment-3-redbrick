@@ -19,10 +19,9 @@ export class ProjectService {
 		const findUser = await this.userModel.findOne({
 			userId: loginUser.userId
 		});
-		console.log("wwwwww");
 		const project: Project = new Project();
 		project.projectName = createProjectDto.projectName;
-		// project.userId = findUser.userId;
+		project.userId = findUser.userId;
 
 		return new this.projectModel(project).save();
 	}
