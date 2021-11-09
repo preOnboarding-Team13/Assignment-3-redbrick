@@ -41,53 +41,53 @@ describe("AppController (e2e)", () => {
 	});
 
 	describe("User 관련 테스트", () => {
-		// it.skip("/users/signup (성공)", () => {
-		// 	const user = {
-		// 		userId: "test",
-		// 		userPw: "test"
-		// 	};
-		// 	return request(app.getHttpServer())
-		// 		.post("/users/signin")
-		// 		.send(user)
-		// 		.expect(201)
-		// 		.expect((res) => {
-		// 			jwtToken = res.body.data;
-		// 			expect(jwtToken).toMatch(
-		// 				/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
-		// 			); // jwt regex;
-		// 		});
-		// });
-		// it("/users/signup (중복된 User)", () => {
-		// 	const user = {
-		// 		userId: "test",
-		// 		userPw: "test",
-		// 		userBirthday: "1998-07-01",
-		// 		agreement: true
-		// 	};
-		// 	return request(app.getHttpServer())
-		// 		.post("/users/signup")
-		// 		.send(user)
-		// 		.expect(409)
-		// 		.expect((res) => {
-		// 			expect(res.body.message).toEqual(error.DUPLICATED_USER);
-		// 		});
-		// });
-		// it("/users/signup (불충분한 body)", () => {
-		// 	const user = {
-		// 		userId: "test",
-		// 		userPw: "test"
-		// 	};
-		// 	return request(app.getHttpServer())
-		// 		.post("/users/signup")
-		// 		.send(user)
-		// 		.expect(400)
-		// 		.expect((res) => {
-		// 			const messages = res.body.message;
-		// 			expect(messages[0]).toContain(error.IS_EMPTY);
-		// 			expect(messages[1]).toContain(error.IS_NOT_STRING);
-		// 			expect(messages[2]).toContain(error.IS_NOT_BOOL);
-		// 		});
-		// });
+		it("/users/signup (성공)", () => {
+			const user = {
+				userId: "test",
+				userPw: "test"
+			};
+			return request(app.getHttpServer())
+				.post("/users/signin")
+				.send(user)
+				.expect(201)
+				.expect((res) => {
+					jwtToken = res.body.data;
+					expect(jwtToken).toMatch(
+						/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
+					); // jwt regex;
+				});
+		});
+		it("/users/signup (중복된 User)", () => {
+			const user = {
+				userId: "test",
+				userPw: "test",
+				userBirthday: "1998-07-01",
+				agreement: true
+			};
+			return request(app.getHttpServer())
+				.post("/users/signup")
+				.send(user)
+				.expect(409)
+				.expect((res) => {
+					expect(res.body.message).toEqual(error.DUPLICATED_USER);
+				});
+		});
+		it("/users/signup (불충분한 body)", () => {
+			const user = {
+				userId: "test",
+				userPw: "test"
+			};
+			return request(app.getHttpServer())
+				.post("/users/signup")
+				.send(user)
+				.expect(400)
+				.expect((res) => {
+					const messages = res.body.message;
+					expect(messages[0]).toContain(error.IS_EMPTY);
+					expect(messages[1]).toContain(error.IS_NOT_STRING);
+					expect(messages[2]).toContain(error.IS_NOT_BOOL);
+				});
+		});
 		it("/users/signin (성공)", () => {
 			const user = {
 				userId: "test",
@@ -118,120 +118,120 @@ describe("AppController (e2e)", () => {
 				});
 		});
 	});
-	// describe("Project 관련 테스트", () => {
-	// 	let _id;
-	// 	const fakeProject = {
-	// 		projectName: "테스트 코드"
-	// 	};
-	// 	const fakeModifiedProject = {
-	// 		projectName: "프로젝트 네임"
-	// 	};
-	// 	it("/projects (Post-생성)", () => {
-	// 		return request(app.getHttpServer())
-	// 			.post("/projects")
-	// 			.set("Authorization", `Bearer ${jwtToken}`)
-	// 			.send(fakeProject)
-	// 			.expect(201)
-	// 			.expect((res) => {
-	// 				_id = res.body._id;
-	// 				expect(res.body.projectName).toEqual(
-	// 					fakeProject.projectName
-	// 				);
-	// 			});
-	// 	});
+	describe("Project 관련 테스트", () => {
+		let _id;
+		const fakeProject = {
+			projectName: "테스트 코드"
+		};
+		const fakeModifiedProject = {
+			projectName: "프로젝트 네임"
+		};
+		it("/projects (Post-생성)", () => {
+			return request(app.getHttpServer())
+				.post("/projects")
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.send(fakeProject)
+				.expect(201)
+				.expect((res) => {
+					_id = res.body._id;
+					expect(res.body.projectName).toEqual(
+						fakeProject.projectName
+					);
+				});
+		});
 
-	// 	it("/projects 비인가 된 유저는 프로젝트를 생성할 수 없다.", () => {
-	// 		return request(app.getHttpServer())
-	// 			.post("/projects")
-	// 			.set("Authorization", `earer ${jwtToken}`)
-	// 			.send(fakeProject)
-	// 			.expect(401)
-	// 			.expect((res) => {
-	// 				expect(res.body.message).toEqual("Unauthorized");
-	// 			});
-	// 	});
-	// 	it("/users/projects (성공)", () => {
-	// 		return request(app.getHttpServer())
-	// 			.get("/users/projects")
-	// 			.set("Authorization", `Bearer ${jwtToken}`)
-	// 			.expect(200)
-	// 			.expect((res) => {
-	// 			 	// expect(res.body)
-	// 				console.log(res.body);
-	// 			});
-	// 	});
-	// 	it("/users/projects (인증 실패)", () => {
-	// 		return request(app.getHttpServer())
-	// 			.get("/users/projects")
-	// 			.set("Authorization", `Bearer `)
-	// 			.expect(401)
-	// 			.expect((res) => {
-	// 				expect(res.body.message).toEqual("Unauthorized");
-	// 			});
-	// 	});
-	// 	it("/projects 프로젝트를 수정 할 수 있다.", () => {
-	// 		return request(app.getHttpServer())
-	// 			.patch(`/projects/${_id}`)
-	// 			.set("Authorization", `Bearer ${jwtToken}`)
-	// 			.send(fakeModifiedProject)
-	// 			.expect(200)
-	// 			.expect((res) => {
-	// 				expect(res.body.projectName).toEqual(
-	// 					fakeModifiedProject.projectName
-	// 				);
-	// 			});
-	// 	});
+		it("/projects 비인가 된 유저는 프로젝트를 생성할 수 없다.", () => {
+			return request(app.getHttpServer())
+				.post("/projects")
+				.set("Authorization", `earer ${jwtToken}`)
+				.send(fakeProject)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
+		it("/users/projects (성공)", () => {
+			return request(app.getHttpServer())
+				.get("/users/projects")
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.expect(200)
+				.expect((res) => {
+				 	// expect(res.body)
+					console.log(res.body);
+				});
+		});
+		it("/users/projects (인증 실패)", () => {
+			return request(app.getHttpServer())
+				.get("/users/projects")
+				.set("Authorization", `Bearer `)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
+		it("/projects 프로젝트를 수정 할 수 있다.", () => {
+			return request(app.getHttpServer())
+				.patch(`/projects/${_id}`)
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.send(fakeModifiedProject)
+				.expect(200)
+				.expect((res) => {
+					expect(res.body.projectName).toEqual(
+						fakeModifiedProject.projectName
+					);
+				});
+		});
 
-	// 	it("/projects 비인가 된 유저는 프로젝트를 수정할 수 없다.", () => {
-	// 		return request(app.getHttpServer())
-	// 			.patch(`/projects/${_id}`)
-	// 			.set("Authorization", `earer ${jwtToken}`)
-	// 			.send(fakeModifiedProject)
-	// 			.expect(401)
-	// 			.expect((res) => {
-	// 				expect(res.body.message).toEqual("Unauthorized");
-	// 			});
-	// 	});
+		it("/projects 비인가 된 유저는 프로젝트를 수정할 수 없다.", () => {
+			return request(app.getHttpServer())
+				.patch(`/projects/${_id}`)
+				.set("Authorization", `earer ${jwtToken}`)
+				.send(fakeModifiedProject)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
 
-	// 	it("/projects 프로젝트 조회 (편집하기 위해 조회)", () => {
-	// 		return request(app.getHttpServer())
-	// 			.get(`/projects/${_id}`)
-	// 			.set("Authorization", `Bearer ${jwtToken}`)
-	// 			.expect(200)
-	// 			.expect((res) => {
-	// 				expect(res.body.projectName).toEqual(
-	// 					fakeModifiedProject.projectName
-	// 				);
-	// 			});
-	// 	});
+		it("/projects 프로젝트 조회 (편집하기 위해 조회)", () => {
+			return request(app.getHttpServer())
+				.get(`/projects/${_id}`)
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.expect(200)
+				.expect((res) => {
+					expect(res.body.projectName).toEqual(
+						fakeModifiedProject.projectName
+					);
+				});
+		});
 
-	// 	it("/projects  비인가 된 유저는 프로젝트를 조회 할 수 없다.", () => {
-	// 		return request(app.getHttpServer())
-	// 			.get(`/projects/${_id}`)
-	// 			.set("Authorization", `earer ${jwtToken}`)
-	// 			.expect(401)
-	// 			.expect((res) => {
-	// 				expect(res.body.message).toEqual("Unauthorized");
-	// 			});
-	// 	});
+		it("/projects  비인가 된 유저는 프로젝트를 조회 할 수 없다.", () => {
+			return request(app.getHttpServer())
+				.get(`/projects/${_id}`)
+				.set("Authorization", `earer ${jwtToken}`)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
 
-	// 	it("/projects 비인가된 유저는  프로젝트를 삭제 할 수 없다 ", () => {
-	// 		return request(app.getHttpServer())
-	// 			.delete(`/projects/${_id}`)
-	// 			.set("Authorization", `earer ${jwtToken}`)
-	// 			.expect(401)
-	// 			.expect((res) => {
-	// 				expect(res.body.message).toEqual("Unauthorized");
-	// 			});
-	// 	});
+		it("/projects 비인가된 유저는  프로젝트를 삭제 할 수 없다 ", () => {
+			return request(app.getHttpServer())
+				.delete(`/projects/${_id}`)
+				.set("Authorization", `earer ${jwtToken}`)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
 
-	// 	it("/projects 프로젝트를 삭제 할 수 있다. Status 반환값은 204 이다. ", () => {
-	// 		return request(app.getHttpServer())
-	// 			.delete(`/projects/${_id}`)
-	// 			.set("Authorization", `Bearer ${jwtToken}`)
-	// 			.expect(204);
-	// 	});
-	// });
+		it("/projects 프로젝트를 삭제 할 수 있다. Status 반환값은 204 이다. ", () => {
+			return request(app.getHttpServer())
+				.delete(`/projects/${_id}`)
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.expect(204);
+		});
+	});
 	describe("Game 관련 테스트", () => {
 		let _id;
 		const fakeGame = {
@@ -276,7 +276,9 @@ describe("AppController (e2e)", () => {
 				.send(body)
 				.expect(201)
 				.expect((res) => {
-					expect(res.body.gameName).toEqual(fakeGame.gameName);
+					expect(res.body.gameName).toEqual(
+						fakeModifiedGame.gameName
+					);
 				});
 		});
 		it("/games (실패) 존재하지 않는 프로젝트일 때)", () => {
@@ -285,7 +287,7 @@ describe("AppController (e2e)", () => {
 				gameName: "출시된 게임"
 			};
 			return request(app.getHttpServer())
-				.post("/games")
+				.post(`/games`)
 				.set("Authorization", `Bearer ${jwtToken}`)
 				.send(body)
 				.expect(404)
@@ -303,7 +305,7 @@ describe("AppController (e2e)", () => {
 				.send(body)
 				.expect(400)
 				.expect((res) => {
-					expect(res.body.message).toEqual(error.BADREQUEST);
+					expect(res.body.message[0]).toContain(error.IS_NOT_STRING);
 				});
 		});
 		it("/games (실패) 인증 실패)", () => {
@@ -313,25 +315,48 @@ describe("AppController (e2e)", () => {
 			};
 			return request(app.getHttpServer())
 				.post("/games")
-				.set("Authorization", `Bearer `)
 				.send(body)
 				.expect(401)
 				.expect((res) => {
 					expect(res.body.message).toEqual("Unauthorized");
 				});
 		});
-
-		
 		it("/games (성공) userId", () => {
 			return request(app.getHttpServer())
-				.get("/games")
-				.set("Authorization", `Bearer `)
+				.get(`/games?userId=${"test"}`)
 				.expect(200)
 				.expect((res) => {
-					expect(res.body).toEqual(error.NOT_FOUND_PROJECT);
+					if (res.body.length > 0) {
+						for (const g of res.body) {
+							expect(g.project.userId).toEqual("test");
+						}
+					}
 				});
 		});
-		it("/games (성공) gameName", () => {});
-		it("/games (성공) userId && gameName", () => {});
+		it("/games (성공) gameName", () => {
+			return request(app.getHttpServer())
+				.get(`/games?gameName=${"게임"}`)
+				.expect(200)
+				.expect((res) => {
+					if (res.body.length > 0) {
+						for (const g of res.body) {
+							expect(g.project.gameName).toEqual("test");
+						}
+					}
+				});
+		});
+		it("/games (성공) userId && gameName", () => {
+			return request(app.getHttpServer())
+				.get(`/games?gameName=${"게임"}&userId=${"test"}`)
+				.expect(200)
+				.expect((res) => {
+					if (res.body.length > 0) {
+						for (const g of res.body) {
+							expect(g.project.userId).toEqual("test");
+							expect(g.project.gameName).toEqual("게임");
+						}
+					}
+				});
+		});
 	});
 });
