@@ -9,6 +9,7 @@ import { Project, ProjectSchema } from "./entities/project.schema";
 import { Scene, SceneSchema } from "./entities/scene.schema";
 import { Sprite, SpriteSchema } from "./entities/sprite.schema";
 import { User, UserSchema } from "./entities/user.schema";
+import { GameModule } from './domain/game/game.module';
 
 @Module({
 	imports: [
@@ -27,7 +28,8 @@ import { User, UserSchema } from "./entities/user.schema";
 			envFilePath: [".env"]
 		}),
 		SocketModule,
-		ProjectModule
+		ProjectModule,
+		GameModule
 	]
 })
 export class AppModule {}

@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
+import { Project, ProjectSchema } from "./project.schema";
 
 export type GameDocument = Game & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Game {
-	@Prop({ type: Boolean, required: true, default: false })
-	projectType: boolean;
+	@Prop({ type: ProjectSchema, required: true })
+	project: Project;
 
 	@Prop({ type: Number, required: true, default: 0 })
 	view: number;
@@ -23,3 +23,7 @@ export class Game {
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
+function uuidv4() {
+	throw new Error("Function not implemented.");
+}
+
