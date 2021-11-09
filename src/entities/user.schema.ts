@@ -20,11 +20,12 @@ export class User {
 	agreement: boolean;
 
 	@Prop({
-		type: [ProjectSchema],
+		type: [mongoose.Schema.Types.ObjectId],
+		ref: "Project",
 		required: true,
 		default: []
 	})
-	project: Array<Project>;
+	projectIds: Array<string>;
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;

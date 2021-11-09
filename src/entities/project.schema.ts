@@ -16,8 +16,8 @@ export class Project {
 	})
 	projectId: string;
 
-	@Prop({ type: String, required: true, unique: true })
-	userId: string;
+	// @Prop({ type: String, required: true, unique: true })
+	// userId: string;
 
 	@Prop({ type: String, required: true })
 	projectName: string;
@@ -25,7 +25,7 @@ export class Project {
 	@Prop({
 		type: [SceneSchema],
 		required: true,
-		default: []
+		default: [Scene]
 	})
 	scenes: Array<Scene>;
 

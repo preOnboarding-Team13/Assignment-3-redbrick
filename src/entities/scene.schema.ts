@@ -6,10 +6,10 @@ export type SceneDocument = Scene & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Scene {
-	@Prop({ type: Number, required: true })
+	@Prop({ type: Number, required: true, default: 1 })
 	sceneId: number;
 
-	@Prop({ type: String, required: true })
+	@Prop({ type: String, required: true, default: "scene1" })
 	sceneName: string;
 
 	@Prop({
@@ -18,7 +18,6 @@ export class Scene {
 		default: []
 	})
 	sprites: Array<Sprite>;
-	
 
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;
