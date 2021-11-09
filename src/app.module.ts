@@ -16,9 +16,7 @@ import { LikeModule } from "./domain/like/like.module";
 
 @Module({
 	imports: [
-		MongooseModule.forRoot(
-			"mongodb:mongodb+srv://team13:0000@cluster0.tejes.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-		),
+		MongooseModule.forRoot(process.env.MONGO_URI),
 		MongooseModule.forFeature([
 			{ name: Block.name, schema: BlockSchema },
 			{ name: Game.name, schema: GameSchema },
