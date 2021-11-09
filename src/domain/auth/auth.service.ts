@@ -17,6 +17,7 @@ export class AuthService {
 		const user = await this.userModel.findOne({
 			userId: userId
 		});
+		console.log(userPw, user.userPw);
 		if (!user || (user && !(await bcrypt.compare(userPw, user.userPw)))) {
 			throw new UnauthorizedUserException();
 		}

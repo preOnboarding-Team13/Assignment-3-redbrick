@@ -14,5 +14,5 @@ export class CreateUserDto {
 	userBirthday!: string;
 
 	@IsBoolean()
-	aggrement!: boolean;
+	agreement!: boolean;
 }
