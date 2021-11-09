@@ -19,14 +19,6 @@ export class User {
 	@Prop({ type: Boolean, required: true })
 	agreement: boolean;
 
-	@Prop({
-		type: [mongoose.Schema.Types.ObjectId],
-		ref: "Project",
-		required: true,
-		default: []
-	})
-	projectIds: Array<string>;
-
 	@Prop({ type: Date, required: true, default: Date.now() })
 	createDt: Date;
 

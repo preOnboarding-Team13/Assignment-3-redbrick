@@ -6,8 +6,8 @@ export type SceneDocument = Scene & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Scene {
-	@Prop({ type: Number, required: true, default: 1 })
-	sceneId: number;
+	// @Prop({ type: Number, required: true, default: 1 })
+	// sceneId: number;
 
 	@Prop({ type: String, required: true, default: "scene1" })
 	sceneName: string;

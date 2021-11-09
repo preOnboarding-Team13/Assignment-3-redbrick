@@ -7,17 +7,17 @@ export type ProjectDocument = Project & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Project {
-	@Prop({
-		type: String,
-		required: true,
-		default: function genUUID() {
-			return uuidv4();
-		}
-	})
-	projectId: string;
+	// @Prop({
+	// 	type: String,
+	// 	required: true,
+	// 	default: function genUUID() {
+	// 		return uuidv4();
+	// 	}
+	// })
+	// projectId: string;
 
-	// @Prop({ type: String, required: true, unique: true })
-	// userId: string;
+	@Prop({ type: String, required: true, unique: true })
+	userId: string;
 
 	@Prop({ type: String, required: true })
 	projectName: string;

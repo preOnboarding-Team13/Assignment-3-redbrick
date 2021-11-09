@@ -23,7 +23,4 @@ export class Game {
 }
 
 export const GameSchema = SchemaFactory.createForClass(Game);
-function uuidv4() {
-	throw new Error("Function not implemented.");
-}
 

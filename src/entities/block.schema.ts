@@ -5,13 +5,13 @@ export type BlockDocument = Block & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Block {
-	@Prop({ type: Number, required: true })
-	blockId: number;
+	// @Prop({ type: Number, required: true })
+	// blockId: number;
 
 	@Prop({ type: String, required: true })
 	blockCode: string;
 
-	@Prop({	type: String || Number })
+	@Prop({ type: String || Number })
 	value: number | string;
 
 	@Prop({ type: Date, required: true, default: Date.now() })

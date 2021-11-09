@@ -6,8 +6,8 @@ export type SpriteDocument = Sprite & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Sprite {
-	@Prop({ type: Number, required: true })
-	spriteId: number;
+	// @Prop({ type: Number, required: true })
+	// spriteId: number;
 
 	@Prop({ type: String, required: true })
 	spriteName: string;
