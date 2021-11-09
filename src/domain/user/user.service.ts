@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { CreateUserDto } from "./dto/createUser.dto";
@@ -6,6 +6,7 @@ import * as bcrypt from "bcrypt";
 import { AuthService } from "../auth/auth.service";
 import { Project } from "src/entities/project.schema";
 import { User } from "src/entities/user.schema";
+import { DuplicatedUserException } from "./exception/DuplicatedUserException";
 
 @Injectable()
 export class UserService {
@@ -15,7 +16,7 @@ export class UserService {
 
 		@InjectModel("Project")
 		private projectModel: Model<Project>,
-		
+
 		private authService: AuthService
 	) {}
 
@@ -27,7 +28,7 @@ export class UserService {
 		const findUser = await this.userModel.findOne({
 			userId: createUser.userId
 		});
-		if (findUser) throw new Error();
+		if (findUser) throw new DuplicatedUserException();
 
 		const user: User = new User();
 		user.userId = createUser.userId;
@@ -45,7 +46,6 @@ export class UserService {
 			.find({ userId: loginUser.userId })
 			.select("projectName updateDt")
 			.exec();
-		console.log(projects);
 		return projects;
 	}
 }

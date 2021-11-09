@@ -1,10 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Project } from "src/entities/project.schema";
 import { User } from "src/entities/user.schema";
 import { CreateProjectDto } from "./dto/createProject.dto";
 import { EditProjectDto } from "./dto/edtiProject.dto";
+import { NotFoundProjectException } from "./exception/NotFoundProjectException";
 
 @Injectable()
 export class ProjectService {
@@ -36,9 +37,8 @@ export class ProjectService {
 		const project = await this.projectModel.findOne({
 			_id: projectId
 		});
-
-		if (project.userId != loginUser.userId) throw new Error();
-
+		if (!project) throw new NotFoundProjectException();
+		if (project.userId != loginUser.userId) throw new BadRequestException();
 		project.projectName = editProjectDto.projectName;
 		project.updateDt = new Date();
 		return new this.projectModel(project).save();
@@ -47,14 +47,15 @@ export class ProjectService {
 	// 프로젝트 조회
 	async getProject(loginUser, projectId){
 		const project = await this.projectModel.findById(projectId);
-		if (project.userId !== loginUser.userId) throw new Error();
+		if (!project) throw new NotFoundProjectException();
+		if (project.userId !== loginUser.userId) throw new BadRequestException();
 		return project;
 	}
 
 	async deleteProject(loginUser, projectId){
 		const project = await this.projectModel.findById(projectId);
-		if (!project) throw new Error(); // 삭제할 프로젝트가 존재하지 않음
-		if (project.userId !== loginUser.userId) throw new Error(); // 삭제 권한이 없다.
+		if (!project) throw new NotFoundProjectException();
+		if (project.userId !== loginUser.userId) throw new BadRequestException(); // 삭제 권한이 없다.
 		return project.delete().save();
 	}
 }

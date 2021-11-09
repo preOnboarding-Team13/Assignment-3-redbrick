@@ -4,8 +4,8 @@ import { Model, Mongoose } from "mongoose";
 import { Game } from "src/entities/game.schema";
 import { Project } from "src/entities/project.schema";
 import { User } from "src/entities/user.schema";
-import { NotFoundGameException } from "./exception/NotFoundGameException";
-import { NotFoundUserException } from "./exception/NotFoundUserException";
+import { NotFoundGameException } from "../game/exception/NotFoundGameException";
+import { NotFoundUserException } from "../user/exception/NotFoundUserException";
 
 @Injectable()
 export class LikeService {
