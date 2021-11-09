@@ -16,7 +16,7 @@ import { LikeService } from "./like.service";
 export class LikeController {
 	constructor(private readonly likeService: LikeService) {}
 
-	@Get(":gameId")
+	@Get("/game:gameId")
 	async findGame(@Param("gameId") gameId: string) {
 		return await this.likeService.findGame(gameId);
 	}
