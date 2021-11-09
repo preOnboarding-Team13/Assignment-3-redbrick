@@ -11,7 +11,7 @@ import {
 import { JwtGuard } from "../auth/guards/jwtGuard.guard";
 import { LikeService } from "./like.service";
 
-// @UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller("")
 export class LikeController {
 	constructor(private readonly likeService: LikeService) {}
