@@ -4,6 +4,10 @@ import * as request from "supertest";
 import { AppModule } from "./../src/app.module";
 
 const error = {
+	IS_NOT_STRING: "must be a string",
+	IS_NOT_BOOL: "must be a boolean",
+	IS_NOT_NUMBER: "must be an integer number",
+	IS_EMPTY: "should not be empty",
 	UNAUTHORIZED: "인증되지 않은 사용자입니다.",
 	BADREQUEST: "잘못된 접근입니다.",
 	NOT_FOUND: "요청받은 리소스를 찾을 수 없습니다.",
@@ -14,9 +18,10 @@ const error = {
 	DUPLICATED_USER: "중복된 아이디입니다."
 };
 
+let jwtToken= "";
 describe("AppController (e2e)", () => {
 	let app: INestApplication;
-
+	
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [AppModule]
@@ -48,7 +53,7 @@ describe("AppController (e2e)", () => {
 		});
 		it("/users/signup (중복된 User)", () => {
 			const user = {
-				userId: "heejin",
+				userId: "test",
 				userPw: "test",
 				userBirthday: "1998-07-01",
 				agreement: true
@@ -56,11 +61,9 @@ describe("AppController (e2e)", () => {
 			return request(app.getHttpServer())
 				.post("/users/signup")
 				.send(user)
-				.expect(404)
+				.expect(409)
 				.expect((res) => {
-					expect(getErrorMessages(res)).toEqual(
-						error.DUPLICATED_USER
-					);
+					expect(res.body.message).toEqual(error.DUPLICATED_USER);
 				});
 		});
 		it("/users/signup (불충분한 body)", () => {
@@ -73,16 +76,40 @@ describe("AppController (e2e)", () => {
 				.send(user)
 				.expect(400)
 				.expect((res) => {
-					expect(getErrorMessages(res)).toEqual(error.BADREQUEST);
+					const messages = res.body.message;
+					expect(messages[0]).toContain(error.IS_EMPTY);
+					expect(messages[1]).toContain(error.IS_NOT_STRING);
+					expect(messages[2]).toContain(error.IS_NOT_BOOL);
 				});
 		});
-
 		it("/users/signin (성공)", () => {
-
+			const user = {
+				userId: "test",
+				userPw: "test"
+			};
+			return request(app.getHttpServer())
+				.post("/users/signin")
+				.send(user)
+				.expect(201)
+				.expect((res) => {
+					jwtToken = res.body.data;
+					expect(jwtToken).toMatch(
+						/^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/
+					); // jwt regex;
+				});
+		});
+		it("/users/signin (잘못된 정보)", () => {
+			const user = {
+				userId: "test",
+				userPw: "wrongpw"
+			};
+			return request(app.getHttpServer())
+				.post("/users/signin")
+				.send(user)
+				.expect(404)
+				.expect((res) => {
+					expect(res.body.message).toEqual(error.UNAUTHORIZED_USER);
+				});
 		});
 	});
 });
-
-function getErrorMessages(res) {
-	return res.body.message;
-}
