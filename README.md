@@ -32,7 +32,7 @@
 1. 상단의 Code 버튼을 눌러 경로를 복사한 후 클론 받습니다.
 
 ```
-$ git clone https://github.com/preOnboarding-Team13/Assignment_1_AIMMO_nest.git
+$ git clone https://github.com/preOnboarding-Team13/Assignment-3-redbrick.git
 ```
 
 2. 패키지를 설치합니다.
