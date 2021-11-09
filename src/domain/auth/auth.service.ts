@@ -4,6 +4,7 @@ import { Model } from "mongoose";
 import { InjectModel } from "@nestjs/mongoose";
 import { User } from "src/entities/user.schema";
 import * as bcrypt from "bcrypt";
+import { UnauthorizedUserException } from "../user/exception/UnauthorizedUserException";
 @Injectable()
 export class AuthService {
 	constructor(
@@ -17,7 +18,7 @@ export class AuthService {
 			userId: userId
 		});
 		if (!user || (user && !(await bcrypt.compare(userPw, user.userPw)))) {
-			throw new Error();
+			throw new UnauthorizedUserException();
 		}
 		return user;
 	}
