@@ -1,6 +1,8 @@
 import {
 	Body,
 	Controller,
+	Delete,
+	Get,
 	Param,
 	Patch,
 	Post,
@@ -47,5 +49,22 @@ export class ProjectController {
 			projectId,
 			editProjectDto
 		);
+	}
+
+	// 프로젝트 조회 (편집하기 위해 조회)
+	@UseGuards(JwtGuard)
+	@Get(":projectId")
+	async getProject(@Request() req, @Param("projectId") projectId: string) {
+		const loginUser = req.user;
+		return this.projectService.getProject(loginUser, projectId);
+	}
+
+	// 프로젝트 삭제
+	@UseGuards(JwtGuard)
+	@Delete(":projectId")
+	async deleteProject(@Request() req, @Param("projectId") projectId: string) {
+		const loginUser = req.user;
+		console.log("hogsd");
+		return this.projectService.deleteProject(loginUser, projectId);
 	}
 }

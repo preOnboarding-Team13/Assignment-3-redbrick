@@ -43,4 +43,18 @@ export class ProjectService {
 		project.updateDt = new Date();
 		return new this.projectModel(project).save();
 	}
+
+	// 프로젝트 조회
+	async getProject(loginUser, projectId){
+		const project = await this.projectModel.findById(projectId);
+		if (project.userId !== loginUser.userId) throw new Error();
+		return project;
+	}
+
+	async deleteProject(loginUser, projectId){
+		const project = await this.projectModel.findById(projectId);
+		if (!project) throw new Error(); // 삭제할 프로젝트가 존재하지 않음
+		if (project.userId !== loginUser.userId) throw new Error(); // 삭제 권한이 없다.
+		return project.delete().save();
+	}
 }
