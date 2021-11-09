@@ -3,6 +3,8 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { Model } from "mongoose";
 import { Game } from "src/entities/game.schema";
 import { User } from "src/entities/user.schema";
+import { NotFoundGameException } from "../game/exception/NotFoundGameException";
+import { NotFoundUserException } from "../user/exception/NotFoundUserException";
 import { LikeService } from "./like.service";
 
 const mockUserModel = {
@@ -115,6 +117,18 @@ describe("LikeService", () => {
 			expect(result).toEqual(game_viewUp);
 			expect(result.view).toBe(game_viewUp.view);
 		});
+
+		it("like Service findGame 테스트 (NotFoundGameException)", async () => {
+			// given
+			try {
+				mockGameModel.findOne.mockResolvedValue(null);
+				// when
+				const result = await service.findGame(gameId);
+			} catch (error) {
+				// then
+				expect(error).toBeInstanceOf(NotFoundGameException);
+			}
+		});
 	});
 
 	describe("like Service likeGame 테스트", () => {
@@ -142,6 +156,31 @@ describe("LikeService", () => {
 			);
 			expect(result).toEqual(game);
 			expect(result.like).toEqual(game_like.like);
+		});
+
+		it("like Service likeGame 테스트 (NotFoundGameException)", async () => {
+			// given
+			try {
+				mockGameModel.findOne.mockResolvedValue(null);
+				// when
+				const result = await service.likeGame(user, gameId);
+			} catch (error) {
+				// then
+				expect(error).toBeInstanceOf(NotFoundGameException);
+			}
+		});
+
+		it("like Service likeGame 테스트 (NotFoundUserException)", async () => {
+			// given
+			try {
+				mockGameModel.findOne.mockResolvedValue(game);
+				mockUserModel.findOne.mockResolvedValue(null);
+				// when
+				const result = await service.likeGame(user, gameId);
+			} catch (error) {
+				// then
+				expect(error).toBeInstanceOf(NotFoundUserException);
+			}
 		});
 	});
 
@@ -172,6 +211,31 @@ describe("LikeService", () => {
 			);
 			expect(result).toEqual(game_hate);
 			expect(result.like).toEqual(game_hate.like);
+		});
+
+		it("like Service hateGame 테스트 (NotFoundGameException)", async () => {
+			// given
+			try {
+				mockGameModel.findOne.mockResolvedValue(null);
+				// when
+				const result = await service.hateGame(user, gameId);
+			} catch (error) {
+				// then
+				expect(error).toBeInstanceOf(NotFoundGameException);
+			}
+		});
+
+		it("like Service hateGame 테스트 (NotFoundUserException)", async () => {
+			// given
+			try {
+				mockGameModel.findOne.mockResolvedValue(game_like);
+				mockUserModel.findOne.mockResolvedValue(null);
+				// when
+				const result = await service.hateGame(user, gameId);
+			} catch (error) {
+				// then
+				expect(error).toBeInstanceOf(NotFoundUserException);
+			}
 		});
 	});
 });

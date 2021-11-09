@@ -1,4 +1,6 @@
 import { Test, TestingModule } from "@nestjs/testing";
+import { NotFoundGameException } from "../game/exception/NotFoundGameException";
+import { NotFoundUserException } from "../user/exception/NotFoundUserException";
 import { LikeController } from "./like.controller";
 import { LikeService } from "./like.service";
 
@@ -91,6 +93,19 @@ describe("LikeController", () => {
 			expect(result).toEqual(game);
 			expect(result.view).toEqual(game_viewUp.view);
 		});
+
+		it("like controller findGame 테스트 (NotFoundGameException)", async () => {
+			// given
+			mockService.findGame.mockResolvedValue(new NotFoundGameException());
+
+			// when
+			const result = await controller.findGame(gameId);
+			console.log(result);
+
+			// then
+			expect(mockService.findGame).toHaveBeenCalledWith(gameId);
+			expect(result).toEqual(new NotFoundGameException());
+		});
 	});
 
 	describe("like controller likeGame 테스트", () => {
@@ -106,6 +121,28 @@ describe("LikeController", () => {
 			expect(result).toEqual(game_like);
 			expect(result.like).toBe(game_like.like);
 		});
+
+		it("like controller likeGame 테스트 (NotFoundGameException)", async () => {
+			// given
+			mockService.likeGame.mockResolvedValue(new NotFoundGameException());
+
+			// when
+			const result = await controller.likeGame(user, gameId);
+
+			// then
+			expect(result).toEqual(new NotFoundGameException());
+		});
+
+		it("like controller likeGame 테스트 (NotFoundUserException)", async () => {
+			// given
+			mockService.likeGame.mockResolvedValue(new NotFoundUserException());
+
+			// when
+			const result = await controller.likeGame(user, gameId);
+
+			// then
+			expect(result).toEqual(new NotFoundUserException());
+		});
 	});
 
 	describe("like controller hateGame 테스트", () => {
@@ -120,6 +157,28 @@ describe("LikeController", () => {
 			// then
 			expect(mockService.hateGame).toHaveBeenCalledTimes(1);
 			expect(result.like).toEqual(game_hate.like);
+		});
+
+		it("like controller hateGame 테스트 (NotFoundGameException)", async () => {
+			// given
+			mockService.hateGame.mockResolvedValue(new NotFoundGameException());
+
+			// when
+			const result = await controller.hateGame(user, gameId);
+
+			// then
+			expect(result).toEqual(new NotFoundGameException());
+		});
+
+		it("like controller hateGame 테스트 (NotFoundUserException)", async () => {
+			// given
+			mockService.hateGame.mockResolvedValue(new NotFoundUserException());
+
+			// when
+			const result = await controller.hateGame(user, gameId);
+
+			// then
+			expect(result).toEqual(new NotFoundUserException());
 		});
 	});
 });
