@@ -9,10 +9,16 @@ export class Game {
 	@Prop({ type: ProjectSchema, required: true })
 	project: Project;
 
+	@Prop({ type: String, required: true })
+	projectName: string;
+
+	@Prop({ type: String, required: true })
+	description: string;
+
 	@Prop({ type: Number, required: true, default: 0 })
 	view: number;
 
-	@Prop({ type: Object, required: true })
+	@Prop({ type: Object, required: true, default: {} })
 	like: object;
 
 	@Prop({ type: Date, required: true, default: Date.now() })

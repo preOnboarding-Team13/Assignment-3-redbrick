@@ -8,4 +8,8 @@ export class GameService {
     publish(project) {
         return this.gameRepository.create(project);
     }
+
+    search(projectName, userId) {
+        return this.gameRepository.findByUserId(userId);
+    }
 }
