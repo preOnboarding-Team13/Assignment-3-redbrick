@@ -60,9 +60,10 @@ export class ExceptionHandler implements ExceptionFilter {
 				.json(ErrorResponse.response(ErrorCode.DuplicatedUser));
 		} else {
 			// 에러 처리가 완료되면 다른 오류로 교체해주세요.
+			console.log(exception);
 			response
 				.status(417)
-				.json(ErrorResponse.response(ErrorCode.NotFound));
+				.json(ErrorResponse.response(ErrorCode.NewError));
 		}
 	}
 }
