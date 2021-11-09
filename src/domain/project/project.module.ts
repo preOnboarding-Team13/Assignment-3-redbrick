@@ -4,6 +4,7 @@ import { Project, ProjectSchema } from "src/entities/project.schema";
 import { User, UserSchema } from "src/entities/user.schema";
 import { AuthModule } from "../auth/auth.module";
 import { ProjectController } from "./project.controller";
+import { ProjectRepository } from "./project.repository";
 import { ProjectService } from "./project.service";
 
 @Module({
@@ -15,6 +16,7 @@ import { ProjectService } from "./project.service";
 		AuthModule
 	],
 	controllers: [ProjectController],
-	providers: [ProjectService]
+	providers: [ProjectService, ProjectRepository],
+	exports: [ProjectRepository]
 })
 export class ProjectModule {}
