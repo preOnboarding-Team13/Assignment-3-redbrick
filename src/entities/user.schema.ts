@@ -4,7 +4,6 @@ import { Project, ProjectSchema } from "./project.schema";
 
 export type UserDocument = User & mongoose.Document;
 
-
 @Schema({ versionKey: false })
 export class User {
 	@Prop({ type: String, required: true, unique: true })
@@ -13,10 +12,10 @@ export class User {
 	@Prop({ type: String, required: true })
 	userPw: string;
 
-	@Prop({ type: Date, required: true })
-	userBirthday: Date;
+	@Prop({ type: String, required: true })
+	userBirthday: string;
 
-	@Prop({ type: Boolean, required: true })
+	@Prop({ type: Boolean, required: true, default: false })
 	agreement: boolean;
 
 	@Prop({ type: Date, required: true, default: Date.now() })
