@@ -18,10 +18,10 @@ const error = {
 	DUPLICATED_USER: "중복된 아이디입니다."
 };
 
-let jwtToken= "";
+let jwtToken = "";
 describe("AppController (e2e)", () => {
 	let app: INestApplication;
-	
+
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
 			imports: [AppModule]
@@ -39,7 +39,7 @@ describe("AppController (e2e)", () => {
 	});
 
 	describe("User 관련 테스트", () => {
-		it("/users/signup (성공)", () => {
+		it.skip("/users/signup (성공)", () => {
 			const user = {
 				userId: "test",
 				userPw: "test",
@@ -110,6 +110,103 @@ describe("AppController (e2e)", () => {
 				.expect((res) => {
 					expect(res.body.message).toEqual(error.UNAUTHORIZED_USER);
 				});
+		});
+	});
+
+	describe("Project 관련 테스트", () => {
+		let _id;
+		const fakeProject = {
+			projectName: "테스트 코드"
+		};
+		const fakeModifiedProject = {
+			projectName: "프로젝트 네임"
+		};
+		it("/projects (Post-생성)", () => {
+			return request(app.getHttpServer())
+				.post("/projects")
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.send(fakeProject)
+				.expect(201)
+				.expect((res) => {
+					_id = res.body._id;
+					expect(res.body.projectName).toEqual(
+						fakeProject.projectName
+					);
+				});
+		});
+
+		it("/projects 비인가 된 유저는 프로젝트를 생성할 수 없다.", () => {
+			return request(app.getHttpServer())
+				.post("/projects")
+				.set("Authorization", `earer ${jwtToken}`)
+				.send(fakeProject)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
+
+		it("/projects 프로젝트를 수정 할 수 있다.", () => {
+			return request(app.getHttpServer())
+				.patch(`/projects/${_id}`)
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.send(fakeModifiedProject)
+				.expect(200)
+				.expect((res) => {
+					expect(res.body.projectName).toEqual(
+						fakeModifiedProject.projectName
+					);
+				});
+		});
+
+		it("/projects 비인가 된 유저는 프로젝트를 수정할 수 없다.", () => {
+			return request(app.getHttpServer())
+				.patch(`/projects/${_id}`)
+				.set("Authorization", `earer ${jwtToken}`)
+				.send(fakeModifiedProject)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
+
+		it("/projects 프로젝트 조회 (편집하기 위해 조회)", () => {
+			return request(app.getHttpServer())
+				.get(`/projects/${_id}`)
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.expect(200)
+				.expect((res) => {
+					expect(res.body.projectName).toEqual(
+						fakeModifiedProject.projectName
+					);
+				});
+		});
+
+		it("/projects  비인가 된 유저는 프로젝트를 조회 할 수 없다.", () => {
+			return request(app.getHttpServer())
+				.get(`/projects/${_id}`)
+				.set("Authorization", `earer ${jwtToken}`)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
+
+		it("/projects 비인가된 유저는  프로젝트를 삭제 할 수 없다 ", () => {
+			return request(app.getHttpServer())
+				.delete(`/projects/${_id}`)
+				.set("Authorization", `earer ${jwtToken}`)
+				.expect(401)
+				.expect((res) => {
+					expect(res.body.message).toEqual("Unauthorized");
+				});
+		});
+
+		it("/projects 프로젝트를 삭제 할 수 있다. Status 반환값은 204 이다. ", () => {
+			return request(app.getHttpServer())
+				.delete(`/projects/${_id}`)
+				.set("Authorization", `Bearer ${jwtToken}`)
+				.expect(204);
 		});
 	});
 });
