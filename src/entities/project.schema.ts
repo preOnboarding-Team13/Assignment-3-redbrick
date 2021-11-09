@@ -16,7 +16,7 @@ export class Project {
 	// })
 	// projectId: string;
 
-	@Prop({ type: String, required: true, unique: true })
+	@Prop({ type: String, required: true })
 	userId: string;
 
 	@Prop({ type: String, required: true })

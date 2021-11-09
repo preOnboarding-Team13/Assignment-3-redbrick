@@ -7,11 +7,20 @@ import { Project } from "src/entities/project.schema";
 export class ProjectRepository {
     constructor(@InjectModel("Project") private readonly projectModel: Model<Project>){}
 
-    findById(id: string) {
-        return this.projectModel.findById(id);
+    create(data): Promise<Project> {
+        const project: Project = new Project();
+        for (const [key, value] of Object.entries(data)) {
+            project[key] = value;
+        }
+
+        return new this.projectModel(project).save();
     }
 
-    updateOne(project, newData) {
+    async findById(_id: string): Promise<Project> {
+        return await this.projectModel.findById({ _id });
+    }
+
+    updateOne(project, newData): Promise<Project> {
         for (const [key, value] of Object.entries(newData)) {
             project[key] = value;
         }
@@ -19,4 +28,7 @@ export class ProjectRepository {
         return project.save();
     }
 
+    delete(project) {
+        return project.delete();
+    }
 }

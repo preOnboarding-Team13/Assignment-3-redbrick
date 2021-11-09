@@ -34,7 +34,7 @@ export class UserService {
 		user.userId = createUser.userId;
 		user.userPw = await this.hashPassword(createUser.userPw);
 		user.userBirthday = createUser.userBirthday;
-		user.agreement = createUser.aggrement;
+		user.agreement = createUser.agreement;
 
 		new this.userModel(user).save();
 
