@@ -3,13 +3,15 @@ import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ProjectModule } from "./domain/project/project.module";
 import { SocketModule } from "./domain/socket/socket.module";
+import { UserModule } from "./domain/user/user.module";
+import { AuthModule } from "./domain/auth/auth.module";
 import { Block, BlockSchema } from "./entities/block.schema";
 import { Game, GameSchema } from "./entities/game.schema";
 import { Project, ProjectSchema } from "./entities/project.schema";
 import { Scene, SceneSchema } from "./entities/scene.schema";
 import { Sprite, SpriteSchema } from "./entities/sprite.schema";
 import { User, UserSchema } from "./entities/user.schema";
-import { GameModule } from './domain/game/game.module';
+import { GameModule } from "./domain/game/game.module";
 
 @Module({
 	imports: [
@@ -27,6 +29,8 @@ import { GameModule } from './domain/game/game.module';
 		ConfigModule.forRoot({
 			envFilePath: [".env"]
 		}),
+		UserModule,
+		AuthModule,
 		SocketModule,
 		ProjectModule,
 		GameModule
