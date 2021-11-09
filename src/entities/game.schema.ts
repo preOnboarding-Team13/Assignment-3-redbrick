@@ -6,13 +6,16 @@ export type GameDocument = Game & mongoose.Document;
 
 @Schema({ versionKey: false })
 export class Game {
+	@Prop({ type: String, required: true})
+	gameName: string;
+
 	@Prop({ type: ProjectSchema, required: true })
 	project: Project;
 
 	@Prop({ type: Number, required: true, default: 0 })
 	view: number;
 
-	@Prop({ type: Object, required: true })
+	@Prop({ type: Object, required: true, default: {} })
 	like: object;
 
 	@Prop({ type: Date, required: true, default: Date.now() })

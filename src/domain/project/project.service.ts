@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Project } from "src/entities/project.schema";
@@ -16,15 +16,16 @@ export class ProjectService {
 		@InjectModel("Project")
 		private readonly projectModel: Model<Project>
 	) {}
+
 	// 프로젝트 생성
 	async createProject(loginUser, createProjectDto: CreateProjectDto) {
 		const findUser = await this.userModel.findOne({
 			userId: loginUser.userId
 		});
+		if (!loginUser) throw new UnauthorizedException();
 		const project: Project = new Project();
 		project.projectName = createProjectDto.projectName;
 		project.userId = findUser.userId;
-
 		return new this.projectModel(project).save();
 	}
 
@@ -48,14 +49,16 @@ export class ProjectService {
 	async getProject(loginUser, projectId){
 		const project = await this.projectModel.findById(projectId);
 		if (!project) throw new NotFoundProjectException();
-		if (project.userId !== loginUser.userId) throw new BadRequestException();
+		if (project.userId !== loginUser.userId)
+			throw new BadRequestException();
 		return project;
 	}
 
 	async deleteProject(loginUser, projectId){
 		const project = await this.projectModel.findById(projectId);
 		if (!project) throw new NotFoundProjectException();
-		if (project.userId !== loginUser.userId) throw new BadRequestException(); // 삭제 권한이 없다.
-		return project.delete().save();
+		if (project.userId !== loginUser.userId)
+			throw new BadRequestException(); // 삭제 권한이 없다.
+		return project.delete();
 	}
 }

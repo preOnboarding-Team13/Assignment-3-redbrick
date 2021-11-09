@@ -3,6 +3,7 @@ import {
 	Controller,
 	Delete,
 	Get,
+	HttpCode,
 	Param,
 	Patch,
 	Post,
@@ -62,9 +63,9 @@ export class ProjectController {
 	// 프로젝트 삭제
 	@UseGuards(JwtGuard)
 	@Delete(":projectId")
+	@HttpCode(204)
 	async deleteProject(@Request() req, @Param("projectId") projectId: string) {
 		const loginUser = req.user;
-		console.log("hogsd");
 		return this.projectService.deleteProject(loginUser, projectId);
 	}
 }

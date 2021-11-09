@@ -5,9 +5,12 @@ import {
 	Post,
 	Query,
 	UseGuards,
-	Request
+	Request,
+	Patch,
+	Body
 } from "@nestjs/common";
 import { JwtGuard } from "../auth/guards/jwtGuard.guard";
+import { CreateGameDto } from "./dto/createGame.dto";
 import { GameService } from "./game.service";
 
 @Controller("games")
@@ -15,9 +18,9 @@ export class GameController {
 	constructor(private gameService: GameService) {}
 	@UseGuards(JwtGuard)
 	@Post()
-	publish(@Request() req, @Param() projectId: string) {
+	publish(@Request() req, @Body() createGameDto: CreateGameDto) {
 		const loginUser = req.user;
-		return this.gameService.publish(loginUser, projectId);
+		return this.gameService.publish(loginUser, createGameDto);
 	}
 
 	@Get("/search")
