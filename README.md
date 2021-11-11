@@ -395,7 +395,7 @@ Postman으로는 다음과 같이 소켓 통신 테스트를 진행할 수 있�
 
 - 김바다 : 
 - 김효민 : [티스토리 블로그](https://baejjang.tistory.com/6)
-- 원동균 : 
+- 원동균 : [티스토리 블로그](https://tristy.tistory.com/45)
 - 이나영 :
 - 장희진 : 
 - 조재복 : 
