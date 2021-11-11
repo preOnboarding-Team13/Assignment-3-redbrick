@@ -13,7 +13,7 @@
 | 이름                                     | 담당 기능 |
 | ---------------------------------------- | --------- |
 | [김바다](https://github.com/sally0226)   |Project API 기능 구현 & Unit Test 구현, E2E Test|
-| [김효민](https://github.com/luckyhyom)   |Socket Unit Test, Refactoring, Game Publishing API 구현|
+| [김효민](https://github.com/luckyhyom)   |Socket, Unit Test, Refactoring, 게임 (출시,검색) API 구현|
 | [원동균](https://github.com/WonDongGyun) |Socket 설정 및 구현, like hate 기능 구현 & unit 테스트, 공통 에러 처리 및 응답 구현|
 | [이나영](https://github.com/bokiri409)   |Project API 기능 구현 & Unit Test 구현|
 | [장희진](https://github.com/heejin99)    |User, Auth 기능 구현 & Unit Test 구현, AWS 서버 배포|
@@ -394,7 +394,7 @@ Postman으로는 다음과 같이 소켓 통신 테스트를 진행할 수 있�
 ## 🍭 TIL 블로그 주소
 
 - 김바다 : 
-- 김효민 : 
+- 김효민 : [티스토리 블로그](https://baejjang.tistory.com/6)
 - 원동균 : 
 - 이나영 :
 - 장희진 : 
