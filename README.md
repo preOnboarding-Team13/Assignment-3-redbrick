@@ -227,52 +227,52 @@ test 폴더: e2e test 폴더
 - 회원가입
 
 	✅ 회원을 생성하는 API
-
+	
 	✅ 로그인 API
 
 - 프로젝트
 
 	✅ 프로젝트 생성 API
-
+	
 	✅ 선택한 프로젝트를 가져오는 API
 	
 	✅ 프로젝트 편집 API
-
+	
 	✅ 프로젝트 조회 API
-
+	
 	✅ 프로젝트 삭제 API
 
 - 게임
 
 	✅ 해당 프로젝트를 퍼블리싱 하는 API
-
+	
 	✅ 퍼블리싱된 게임을 검색하는 API
 
 - 좋아요 / 싫어요
 
 	✅ 좋아요 API
-
+	
 	✅ 싫어요 API
-
+	
 	✅ 선택한 게임 데이터를 가져오고, 조회수를 증가시키는 API
 
 
 - 기업이 제시한 문제
 
 	✅ 회원가입 ~ 게임 출시까지 필요한 테이블 설계
-
+	
 	✅ 게임 제작하기에 필요한 API
-
+	
 	✅ 조회수 수정, 좋아요 API
-
+	
 	✅ 게임 혹은 사용자로 검색 API
-
+	
 	✅ 프로젝트 실시간 반영을 위한 Architecture 설계
-
+	
 	✅ 설계한 Architecture를 토대로 기능 구현
-
+	
 	✅ E2E Test
-
+	
 	✅ Unit Test 
 
 <br/>
@@ -397,5 +397,5 @@ Postman으로는 다음과 같이 소켓 통신 테스트를 진행할 수 있�
 - 김효민 : [티스토리 블로그](https://baejjang.tistory.com/6)
 - 원동균 : [티스토리 블로그](https://tristy.tistory.com/45)
 - 이나영 :
-- 장희진 : 
+- 장희진 : [깃허브 블로그](https://heejin99.github.io/preonboarding/Pre-Onboarding-%EA%B8%B0%EC%97%85%EA%B3%BC%EC%A0%9C-%EB%A0%88%EB%93%9C%EB%B8%8C%EB%A6%AD-TIL/)
 - 조재복 : 
